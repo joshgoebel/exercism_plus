@@ -15,17 +15,22 @@ const getEditor = () => document.querySelector('textarea.md-input[name="discussi
 const fixEditorKeystrokes = () => {
   if(!getEditor()) return;
 
-  let boldButton = document.querySelector('button[data-hotkey="Ctrl+B"]')
-  let italicButton = document.querySelector('button[data-hotkey="Ctrl+I"]')
-  getEditor().addEventListener("keydown", (event) => {
-    let click = new MouseEvent('click', { bubbles: true});
-    if (event.metaKey && event.key=="b") {
-      boldButton.dispatchEvent(click);
-    }
-    if (event.metaKey && event.key=="i") {
-      italicButton.dispatchEvent(click);
-    }
+  let editors = document.querySelectorAll('textarea[name="discussion_post[content]"]')
+
+  editors.forEach((editor) => {
+    editor.addEventListener("keydown", (event) => {
+      let click = new MouseEvent('click', { bubbles: true});
+      if (event.metaKey && event.key=="b") {
+        let boldButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+B"]')
+        boldButton.dispatchEvent(click);
+      }
+      if (event.metaKey && event.key=="i") {
+        let italicButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+I"]')
+        italicButton.dispatchEvent(click);
+      }
+    })
   })
+
 }
 
 const TIPS = [
