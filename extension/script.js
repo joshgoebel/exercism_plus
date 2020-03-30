@@ -35,11 +35,15 @@ const fixEditorKeystrokes = () => {
 
 const TIPS = [
   [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
+  [/\b(never|always)\b/i, "Try not to speak in absolutes."],
   [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
-  [/\b(your code)\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
   [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
-  [/\byou don't need\b/i,"Try speaking more suggestively, less imperatively."],
   [/\breally\b/i,"Is really <i>really</i> necessary?"],
+  [/\byou do not\b/i,"Try speaking more suggestively, less imperatively."],
+  [/\byou don't\b/i,"Try speaking more suggestively, less imperatively."],
+  [/\byou need\b/i,"Try speaking more suggestively, less imperatively."],
+  [/\byou\b/i,"Is it them, or is it the code?  Avoid 'you' if possible."],
+  [/\byour code\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
 ]
 
 class ContentParser {
