@@ -11,9 +11,6 @@
         }
       ],
     "icons": {
-        // "16": "images/exercism_plus16.png",
-        // "32": "images/exercism_plus32.png",
-        // "48": "images/exercism_plus48.png",
         "128": "images/exercism_plus128.png"
     }
   }
