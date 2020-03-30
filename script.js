@@ -13,6 +13,8 @@ const addNewSolutionsMenuLink = () => {
 const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
 
 const fixEditorKeystrokes = () => {
+  if(!getEditor()) return;
+
   let boldButton = document.querySelector('button[data-hotkey="Ctrl+B"]')
   let italicButton = document.querySelector('button[data-hotkey="Ctrl+I"]')
   getEditor().addEventListener("keydown", (event) => {
@@ -27,7 +29,7 @@ const fixEditorKeystrokes = () => {
 }
 
 const TIPS = [
-  [/[A-Z]{5}/, "Bad mentor. Don't yell at your students!"],
+  [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
   [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
   [/\b(your code)\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
   [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
@@ -67,9 +69,12 @@ const onMacintosh = () => {
 
 const boot = () => {
   addNewSolutionsMenuLink();
-  if (onMacintosh())
-    fixEditorKeystrokes();
-  editorTips();
+
+  if (getEditor()) {
+    if (onMacintosh())
+      fixEditorKeystrokes();
+    editorTips();
+  }
 }
 
 boot();
