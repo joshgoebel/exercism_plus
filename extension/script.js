@@ -77,7 +77,10 @@ const collapseCoreExercises = () => {
 
 const renameSolutionsYourMentoring = () => {
   let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]')
-  waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,"Requires Action $1")
+  if (!waiting) return;
+
+  waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
+    "Mentoring $1")
 }
 
 const cleanUI = () => {
