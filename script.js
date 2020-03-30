@@ -10,7 +10,7 @@ const addNewSolutionsMenuLink = () => {
     $("<li><a href='/mentor/dashboard/next_solutions'>New solutions</a></li>"))
 }
 
-const getEditor = () => document.querySelector('textarea[name="discussion_post[content]"]');
+const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
 
 const fixEditorKeystrokes = () => {
   let boldButton = document.querySelector('button[data-hotkey="Ctrl+B"]')
@@ -24,7 +24,41 @@ const fixEditorKeystrokes = () => {
       italicButton.dispatchEvent(click);
     }
   })
+}
 
+const TIPS = [
+  [/[A-Z]{5}/, "Bad mentor. Don't yell at your students!"],
+  [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
+  [/\b(your code)\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
+  [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
+  [/\byou don't need\b/i,"Try speaking more suggestively, less imperatively."],
+  [/\breally\b/i,"Is really <i>really</i> necessary?"],
+]
+
+class ContentParser {
+  constructor(text) {
+    this.text = text
+  }
+  textualContent() {
+    return this.text
+  }
+}
+
+const editorTips = () => {
+  let editor = getEditor()
+  let markdownPane = document.querySelector('.pane.markdown')
+  let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
+  // TODO: add a delay timer so do don't fire every single time a key is hit
+  editor.addEventListener("keyup", (event) => {
+    let text = new ContentParser(editor.value).textualContent()
+    tips.innerHTML="";
+    for (let [matcher,suggestion] of TIPS) {
+      if (matcher.test(text)) {
+        tips.appendChild($(`<li>${suggestion}</li>`))
+      }
+    }
+
+  });
 }
 
 const onMacintosh = () => {
@@ -35,6 +69,8 @@ const boot = () => {
   addNewSolutionsMenuLink();
   if (onMacintosh())
     fixEditorKeystrokes();
+  editorTips();
 }
 
 boot();
+
