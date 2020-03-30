@@ -35,7 +35,7 @@ Currently just download it from Git and install it in Chrome Developer Mode.
 
 ## Contributing
 
-Please only an issue if you have any idea for contributing.  If you mentor and have a common
+Please open an issue if you have any idea for contributing.  If you mentor and have a common
 anti-pattern to share, please feel free to open a PR.
 
 ## License
