@@ -1,0 +1,102 @@
+#mentor-dashboard-page .solution,
+#mentor-next-solutions-page .solution,
+#mentor-testimonials-page .solution {
+    margin:0 !important;
+    border:0 !important;
+    background:#f7f7f7;
+    border:1px solid #ddd !important;
+    border-width:0px 1px !important;
+    padding:28px 20px !important;
+    border-bottom:1px solid #eee !important;
+}
+
+#mentor-dashboard-page .header,
+#mentor-next-solutions-page .header,
+#mentor-testimonials-page .header {
+    padding-top:30px !important;
+}
+
+#mentor-dashboard-page .solution .track-icon,
+#mentor-next-solutions-page .solution .track-icon,
+#mentor-testimonials-page .solution .track-icon {
+    top: 13px !important;
+}
+
+#mentor-dashboard-page .solution:nth-of-type(1),
+#mentor-next-solutions-page .solution:nth-of-type(1),
+#mentor-testimonials-page .solution:nth-of-type(1) {
+    border-top:1px solid #ccc !important;
+}
+
+#mentor-dashboard-page .solution:hover,
+#mentor-next-solutions-page .solution:hover,
+#mentor-testimonials-page .solution:hover {
+    border: 1px solid #4A90E2 !important;
+}
+
+
+#mentor-dashboard-page .solution:nth-child(even),
+#mentor-next-solutions-page .solution:nth-child(even),
+#mentor-testimonials-page .solution:nth-child(even) {
+    background: white
+}
+.solution .icons .joiner { visibility: hidden !important; }
+.solution .icons .exercise {
+    border-radius: 5px !important;
+    border: 1px solid #009cab99 !important;
+}
+.solution .icons .person {
+    border-radius: 25px !important;
+    border:0 !important;
+    box-shadow: 0px 0px 5px #999;
+}
+
+/* remove crazy over-bold */
+body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
+    font-weight: bold !important;
+}
+
+.solution .title {
+    font-size:0rem !important;
+    display:flex;
+    flex-direction: row;
+    align-items: baseline;
+    margin-bottom: 0px !important;
+}
+
+.solution .details .extra {
+    color: #888 !important;
+}
+
+/* extraneous */
+#mentor-next-solutions-page .solution .extra .language {
+    display: none !important;
+}
+#mentor-next-solutions-page .solution .extra .iteration {
+    /* display: none !important; */
+    padding-right:1.5em;
+}
+#mentor-next-solutions-page .solution .extra .divider {
+    display: none !important;
+}
+
+.solution .title div {
+    font-size:1.2rem !important;
+}
+
+.solution .title div.handle {
+    order:2;
+    font-weight: normal !important;
+    font-size:0.75rem !important;
+}
+.solution .title div.exercise {
+    font-weight:600;
+    padding-right:1.5em;
+    color: #333 !important;
+    order:1
+}
+
+#mentor-next-solutions-page .solution .title div.handle {
+    display: none !important;
+
+}
