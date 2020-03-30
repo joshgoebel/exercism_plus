@@ -103,6 +103,10 @@ body {
 
 }
 
+.solution .details .extra .submitted-at {
+    float:right;
+}
+
 /* testimonials pop */
 
 .testimonial .feedback i {

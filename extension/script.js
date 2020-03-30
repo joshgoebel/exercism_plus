@@ -59,7 +59,7 @@ const editorTips = () => {
     if (editor._tipTimer)
       return;
 
-    // we only fire every 500ms, should be responive enough
+    // we only fire every 500ms, should be responsive enough
     editor._tipTimer = setTimeout(() => {
       editor._tipTimer = null
       let text = new ContentParser(editor.value).textualContent()
@@ -96,6 +96,9 @@ const renameSolutionsYourMentoring = () => {
 const cleanUI = () => {
   collapseCoreExercises();
   renameSolutionsYourMentoring();
+  document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
+    el.innerHTML = el.innerHTML.replace("for mentoring","")
+  })
 }
 
 const boot = () => {
