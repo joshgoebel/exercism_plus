@@ -20,7 +20,7 @@ already amazing [Exercism.io](https://exercism.io/) service.
 
 ### What it looks like
 
-![Textual analysis example](https://raw.githubusercontent.com/yyyc514/exercism_plus/master/sample/snap.png){:width="250px"}
+![Textual analysis example](https://raw.githubusercontent.com/yyyc514/exercism_plus/master/sample/snap.png)
 
 ### How it works
 
