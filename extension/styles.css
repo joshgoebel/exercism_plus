@@ -4,10 +4,10 @@
     margin:0 !important;
     border:0 !important;
     background:#f7f7f7;
-    border:1px solid #ddd !important;
-    border-width:0px 1px !important;
+    border:1px solid #eee !important;
+    /* border-width:0px 1px !important; */
     padding:28px 20px !important;
-    border-bottom:1px solid #eee !important;
+    /* border-bottom:1px solid #eee !important; */
 }
 
 #mentor-dashboard-page .header,
@@ -26,6 +26,7 @@
 #mentor-next-solutions-page .solution:nth-of-type(1),
 #mentor-testimonials-page .solution:nth-of-type(1) {
     border-top:1px solid #ccc !important;
+    border-radius: 10px 10px 0px 0px;
 }
 
 #mentor-dashboard-page .solution:hover,
@@ -99,4 +100,14 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 #mentor-next-solutions-page .solution .title div.handle {
     display: none !important;
 
+}
+
+.testimonial .feedback i {
+    color: #ccc !important;
+    font-size:0.6em !important;
+}
+.testimonial .feedback {
+    font-size:1.6em !important;
+    line-height: 1.3em !important;
+    font-weight: 200 !important;
 }
