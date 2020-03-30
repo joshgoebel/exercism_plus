@@ -1,3 +1,7 @@
+body {
+    /* background: black */
+}
+
 #mentor-dashboard-page .solution,
 #mentor-next-solutions-page .solution,
 #mentor-testimonials-page .solution {
@@ -39,7 +43,7 @@
 #mentor-dashboard-page .solution:nth-child(even),
 #mentor-next-solutions-page .solution:nth-child(even),
 #mentor-testimonials-page .solution:nth-child(even) {
-    background: white
+    background: transparent
 }
 .solution .icons .joiner { visibility: hidden !important; }
 .solution .icons .exercise {
@@ -136,4 +140,10 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 #mentor-testimonials-page .solution .side,
 #mentor-testimonials-page .solution .independent {
     font-weight: normal !important;
+}
+
+#mentor-dashboard-page .solution .core,
+#mentor-next-solutions-page .solution .core,
+#mentor-testimonials-page .solution .core {
+    color: #179caacc !important;
 }
