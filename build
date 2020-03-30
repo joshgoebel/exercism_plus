@@ -1,4 +1,3 @@
 #!/bin/sh
 rm extension.crx
-rm extension.pem
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --pack-extension=./extension/ --pack-extension-key=./extension.pem
