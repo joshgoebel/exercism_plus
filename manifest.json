@@ -1,0 +1,13 @@
+{
+    "name": "Exercism Plus",
+    "version": "0.1",
+    "description": "Enhancements for the great Exercism website!",
+    "manifest_version": 2,
+    "content_scripts": [
+        {
+          "matches": ["https://exercism.io/*"],
+          "css": ["styles.css"],
+          "js": ["script.js"]
+        }
+      ]
+  }
