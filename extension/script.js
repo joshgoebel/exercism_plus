@@ -55,16 +55,21 @@ const editorTips = () => {
   let editor = getEditor()
   let markdownPane = document.querySelector('.pane.markdown')
   let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
-  // TODO: add a delay timer so do don't fire every single time a key is hit
   editor.addEventListener("keyup", (event) => {
-    let text = new ContentParser(editor.value).textualContent()
-    tips.innerHTML="";
-    for (let [matcher,suggestion] of TIPS) {
-      if (matcher.test(text)) {
-        tips.appendChild($(`<li>${suggestion}</li>`))
-      }
-    }
+    if (editor._tipTimer)
+      return;
 
+    // we only fire every 500ms, should be responive enough
+    editor._tipTimer = setTimeout(() => {
+      editor._tipTimer = null
+      let text = new ContentParser(editor.value).textualContent()
+      tips.innerHTML="";
+      for (let [matcher,suggestion] of TIPS) {
+        if (matcher.test(text)) {
+          tips.appendChild($(`<li>${suggestion}</li>`))
+        }
+      }
+    },500);
   });
 }
 
