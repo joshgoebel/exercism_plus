@@ -45,6 +45,7 @@
 .solution .icons .exercise {
     border-radius: 5px !important;
     border: 1px solid #009cab99 !important;
+    box-shadow: 1px 1px 5px #bbb;
 }
 .solution .icons .person {
     border-radius: 25px !important;
@@ -52,10 +53,6 @@
     box-shadow: 0px 0px 5px #999;
 }
 
-/* remove crazy over-bold */
-body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
-    font-weight: bold !important;
-}
 
 .solution .title {
     font-size:0rem !important;
@@ -91,7 +88,7 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
     font-size:0.75rem !important;
 }
 .solution .title div.exercise {
-    font-weight:600;
+    font-weight:500;
     padding-right:1.5em;
     color: #333 !important;
     order:1
@@ -102,6 +99,8 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 
 }
 
+/* testimonials pop */
+
 .testimonial .feedback i {
     color: #ccc !important;
     font-size:0.6em !important;
@@ -110,4 +109,31 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
     font-size:1.6em !important;
     line-height: 1.3em !important;
     font-weight: 200 !important;
+}
+
+#mentor-next-solutions-page .next-exercises-navigation .subtitle .label {
+    /* background: #4A90E2; */
+    /* background:#179caa99; */
+}
+
+/* less bold */
+#mentor-next-solutions-page .next-exercises-navigation li .label {
+    font-weight: normal !important;
+    color:#444 !important;
+}
+
+body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
+    font-weight: bold !important;
+}
+
+#mentor-dashboard-page .solution .core,
+#mentor-dashboard-page .solution .side,
+#mentor-dashboard-page .solution .independent,
+#mentor-next-solutions-page .solution .core,
+#mentor-next-solutions-page .solution .side,
+#mentor-next-solutions-page .solution .independent,
+#mentor-testimonials-page .solution .core,
+#mentor-testimonials-page .solution .side,
+#mentor-testimonials-page .solution .independent {
+    font-weight: normal !important;
 }
