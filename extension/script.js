@@ -67,6 +67,18 @@ const onMacintosh = () => {
   return /Macintosh/.test(navigator.userAgent)
 }
 
+const collapseCoreExercises = () => {
+  document.querySelectorAll("ul.exercises li a.label").forEach(el => {
+    if (el.innerHTML.includes("· 0"))
+      el.parentNode.removeChild(el);
+    el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
+  })
+}
+
+const cleanUI = () => {
+  collapseCoreExercises();
+}
+
 const boot = () => {
   addNewSolutionsMenuLink();
 
@@ -75,6 +87,7 @@ const boot = () => {
       fixEditorKeystrokes();
     editorTips();
   }
+  cleanUI();
 }
 
 boot();
