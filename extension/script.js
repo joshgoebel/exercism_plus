@@ -12,8 +12,8 @@ const config = {
 
 const addNewSolutionsMenuLink = () => {
   let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
-  dashboard.insertAdjacentElement('beforebegin',
-    $("<li><a href='/mentor/dashboard/next_solutions'>New solutions</a></li>"))
+  dashboard.insertAdjacentElement('afterend',
+    $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"))
 }
 
 const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
@@ -53,12 +53,21 @@ const TIPS = [
   [/\bi think\b/i, "You think? Is there a way to sound less uncertain?"],
 ]
 
+const CODE_BLOCK_SNIPPET_RE = /```[\s\S]*?```/g
+const INLINE_CODE_RE = /`.*?`/g
+const QUOTED_RE = /^>.*$/m
+
 class ContentParser {
   constructor(text) {
     this.text = text
   }
   textualContent() {
-    return this.text
+    let text = this.text
+      .replace(CODE_BLOCK_SNIPPET_RE,"")
+      .replace(INLINE_CODE_RE,"")
+      .replace(QUOTED_RE,"")
+      .trim()
+    return text
   }
 }
 
@@ -154,6 +163,17 @@ const useRealName = () => {
   })
 }
 
+const cleanupBreadcrumbs = () => {
+  let breadcrumbs = document.querySelector("nav.breadcrumb")
+  if (!breadcrumbs) return;
+
+  let links = breadcrumbs.querySelectorAll("a")
+  // ugh, what's the point of a single breadcrumb that points to our current page?
+  if (links.length === 1) {
+    breadcrumbs.remove();
+  }
+}
+
 const cleanUI = () => {
   collapseCoreExercises();
   renameMentorTabs();
@@ -161,6 +181,7 @@ const cleanUI = () => {
   cleanupPostsList();
   addFooter();
   useRealName();
+  cleanupBreadcrumbs();
 }
 
 const boot = () => {
