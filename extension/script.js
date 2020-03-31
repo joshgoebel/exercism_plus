@@ -68,7 +68,10 @@ const editorTips = () => {
   let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
   editor.closest("form").addEventListener("submit", (event) => {
     tips.innerHTML="";
-    editor._tipTimer = null;
+    if (editor._tipTimer) {
+      clearTimeout(editor._tipTimer);
+      editor._tipTimer = null;
+    }
   })
   editor.addEventListener("keyup", (event) => {
     if (editor._tipTimer)
@@ -135,7 +138,7 @@ const cleanupSolutionList = () => {
 
 const cleanupPostsList = () => {
   document.querySelectorAll(".post-body .created-at").forEach((el) => {
-    el.innerHTML = el.innerHTML.replace("posted","")
+    el.innerHTML = el.innerHTML.replace(/posted|about/g,"")
   });
 }
 
@@ -144,6 +147,9 @@ const useRealName = () => {
     if (el.innerHTML === config.username) {
       el.innerHTML = config.realname;
       el.parentNode.querySelector(".user-role").remove();
+    }
+    if (el.innerHTML === "Automated Message") {
+      el.innerHTML = "Exercism";
     }
   })
 }
