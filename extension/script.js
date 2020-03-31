@@ -68,6 +68,7 @@ const editorTips = () => {
   let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
   editor.closest("form").addEventListener("submit", (event) => {
     tips.innerHTML="";
+    editor._tipTimer = null;
   })
   editor.addEventListener("keyup", (event) => {
     if (editor._tipTimer)
