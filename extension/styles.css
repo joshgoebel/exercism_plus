@@ -132,10 +132,26 @@ body {
     color:#444 !important;
 }
 
+.misc-menu .dropdown .person {
+    display: none;
+}
+
 .action-next_solutions .widget-filter.track_id { width: 75%; }
 .action-next_solutions .widget-filter.track_id .title {
     display: none !important
 }
+
+
+/* slim header */
+/* a.notifications {
+    background: transparent !important;
+    color:white !important;
+    opacity: 0.9;
+}
+header .logo { display:none !important; }
+header {
+    height:0px !important;
+} */
 
 /* testimonials pop */
 

@@ -153,9 +153,14 @@ const cleanupPostsList = () => {
 
 const useRealName = () => {
   document.querySelectorAll(".post-body .user-handle").forEach((el) => {
+    let role = el.parentNode.querySelector(".user-role")
     if (el.innerHTML === config.username) {
       el.innerHTML = config.realname;
-      el.parentNode.querySelector(".user-role").remove();
+      role.remove();
+    }
+    // there is only a single student it's hard to get confused about who that is
+    if (role && role.innerHTML.trim()==="Student") {
+      role.remove()
     }
     if (el.innerHTML === "Automated Message") {
       el.innerHTML = "Exercism";
@@ -184,7 +189,20 @@ const cleanUI = () => {
   cleanupBreadcrumbs();
 }
 
+const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/
+const NOT_PUBLIC_TEXT = "solution is not public"
+
+const redirect = (url) => window.location.href = url
+
+const redirectToMentoringURL = () => {
+  let m = window.location.href.match(PRIVATE_URL_RE)
+  if (m && document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
+    redirect(`/mentor/solutions/${m[1]}`)
+  }
+}
+
 const boot = () => {
+  redirectToMentoringURL();
   cleanUI();
   addNewSolutionsMenuLink();
 
