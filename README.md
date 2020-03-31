@@ -5,8 +5,9 @@ already amazing [Exercism.io](https://exercism.io/) service.
 
 ## What does it do?
 
-- Adds "New solutions" link to the site menu (my workflow is heavy on this and the New Activity view)
-- Adds &#8984;-B and &#8984;-I shortcuts for bold and italic to the response editor for Mac
+- Thoughtful UI tweaks and subtle design cleanups (less bold everywhere, to name a big one)
+- Adds "New solutions" link to the site menu (my workflow is heavy on this and the Notifications view)
+- Adds &#8984;B and &#8984;I shortcuts for bold and italic to the response editor for Mac
 - Adds a textual analysis engine to the text editor to help prevent common anti-patterns
 
 ## TODO

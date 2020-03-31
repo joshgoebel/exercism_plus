@@ -101,10 +101,10 @@ const renameSolutionsYourMentoring = () => {
 }
 
 const LEGAL = `
-<div class="legal" style='margin-top:0'>
+<div class="legal">
   Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
   devoted to helping improve your Exercism experience, and supported by
-  <a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful volunteers</a>.
+  <a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
 </div>
 `
 
@@ -115,7 +115,10 @@ const cleanUI = () => {
     el.innerHTML = el.innerHTML.replace("for mentoring","")
   })
   let legal = document.querySelector("footer .legal")
-  legal.insertAdjacentElement('afterend',$(LEGAL))
+  if (legal) {
+    legal.insertAdjacentElement('beforebegin',$(LEGAL))
+    legal.style.marginTop=0;
+  }
 }
 
 const boot = () => {
