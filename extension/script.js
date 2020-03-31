@@ -4,6 +4,12 @@ function $(html) {
   return wrapper.firstChild;
 }
 
+// TODO: Add settings panel
+const config = {
+  username: "ajoshguy",
+  realname: "Josh G."
+}
+
 const addNewSolutionsMenuLink = () => {
   let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
   dashboard.insertAdjacentElement('beforebegin',
@@ -44,6 +50,7 @@ const TIPS = [
   [/\byou need\b/i,"Try speaking more suggestively, less imperatively."],
   [/\byou\b/i,"Is it them, or is it the code?  Avoid 'you' if possible."],
   [/\byour code\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
+  [/\bi think\b/i, "You think? Is there a way to sound less uncertain?"],
 ]
 
 class ContentParser {
@@ -92,10 +99,13 @@ const collapseCoreExercises = () => {
   })
 }
 
-const renameSolutionsYourMentoring = () => {
+const renameMentorTabs = () => {
   let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]')
+  let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]')
   if (!waiting) return;
 
+  queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
+    "Queue $1")
   waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
     "Mentoring $1")
 }
@@ -108,17 +118,42 @@ const LEGAL = `
 </div>
 `
 
-const cleanUI = () => {
-  collapseCoreExercises();
-  renameSolutionsYourMentoring();
+const addFooter = () => {
+  let legal = document.querySelector("footer .legal")
+  if (!legal) return;
+
+  legal.insertAdjacentElement('beforebegin',$(LEGAL))
+  legal.style.marginTop=0;
+}
+
+const cleanupSolutionList = () => {
   document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
     el.innerHTML = el.innerHTML.replace("for mentoring","")
   })
-  let legal = document.querySelector("footer .legal")
-  if (legal) {
-    legal.insertAdjacentElement('beforebegin',$(LEGAL))
-    legal.style.marginTop=0;
-  }
+}
+
+const cleanupPostsList = () => {
+  document.querySelectorAll(".post-body .created-at").forEach((el) => {
+    el.innerHTML = el.innerHTML.replace("posted","")
+  });
+}
+
+const useRealName = () => {
+  document.querySelectorAll(".post-body .user-handle").forEach((el) => {
+    if (el.innerHTML === config.username) {
+      el.innerHTML = config.realname;
+      el.parentNode.querySelector(".user-role").remove();
+    }
+  })
+}
+
+const cleanUI = () => {
+  collapseCoreExercises();
+  renameMentorTabs();
+  cleanupSolutionList();
+  cleanupPostsList();
+  addFooter();
+  useRealName();
 }
 
 const boot = () => {
@@ -130,7 +165,16 @@ const boot = () => {
       fixEditorKeystrokes();
     editorTips();
   }
+
+  // fetch("https://exercism.io/my/notifications")
+  //   .then((resp) => resp.blob())
+  //   .then((blob) => blob.text())
+  //   .then((text) => console.log(text))
+
 }
 
-boot();
+document.addEventListener("DOMContentLoaded", () => {
+  boot();
+})
+
 
