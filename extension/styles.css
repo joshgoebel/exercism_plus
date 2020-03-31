@@ -153,6 +153,10 @@ header {
     height:0px !important;
 } */
 
+#mentor-solution-page nav.breadcrumb {
+    display: none;
+}
+
 /* testimonials pop */
 
 .testimonial .feedback i {
