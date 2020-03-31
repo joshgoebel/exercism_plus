@@ -1,6 +1,6 @@
 function $(html) {
   var wrapper = document.createElement('div');
-  wrapper.innerHTML = html;
+  wrapper.innerHTML = html.trim();
   return wrapper.firstChild;
 }
 
@@ -59,6 +59,9 @@ const editorTips = () => {
   let editor = getEditor()
   let markdownPane = document.querySelector('.pane.markdown')
   let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
+  editor.closest("form").addEventListener("submit", (event) => {
+    tips.innerHTML="";
+  })
   editor.addEventListener("keyup", (event) => {
     if (editor._tipTimer)
       return;
@@ -97,15 +100,26 @@ const renameSolutionsYourMentoring = () => {
     "Mentoring $1")
 }
 
+const LEGAL = `
+<div class="legal" style='margin-top:0'>
+  Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
+  devoted to helping improve your Exercism experience, and supported by
+  <a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful volunteers</a>.
+</div>
+`
+
 const cleanUI = () => {
   collapseCoreExercises();
   renameSolutionsYourMentoring();
   document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
     el.innerHTML = el.innerHTML.replace("for mentoring","")
   })
+  let legal = document.querySelector("footer .legal")
+  legal.insertAdjacentElement('afterend',$(LEGAL))
 }
 
 const boot = () => {
+  cleanUI();
   addNewSolutionsMenuLink();
 
   if (getEditor()) {
@@ -113,7 +127,6 @@ const boot = () => {
       fixEditorKeystrokes();
     editorTips();
   }
-  cleanUI();
 }
 
 boot();

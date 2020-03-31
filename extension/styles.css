@@ -107,6 +107,12 @@ body {
     float:right;
 }
 
+.button, .pure-button {
+    border-radius: 20px !important;
+    padding-left:25px !important;
+    padding-right:25px !important;
+}
+
 /* testimonials pop */
 
 .testimonial .feedback i {
@@ -128,6 +134,34 @@ body {
 #mentor-next-solutions-page .next-exercises-navigation li .label {
     font-weight: normal !important;
     color:#444 !important;
+    padding:5px 0;
+    display: block;
+    margin:0 !important;
+    /* position: relative; */
+    /* display: inline-block; */
+}
+#mentor-next-solutions-page .next-exercises-navigation li .label:hover {
+    color: #669cab !important;
+}
+#mentor-next-solutions-page .next-exercises-navigation .exercises .label:before {
+    content: "";
+    position: absolute;
+    /* border-left: 2px solid red; */
+    /* opacity:0; */
+    top: 0;
+    left: -21px;
+    /* transition-property: opacity; */
+    /* transition-duration: 0.5s; */
+    bottom: 0px;
+}
+#mentor-next-solutions-page .next-exercises-navigation .exercises .label:hover:before {
+    content: "";
+    border-left: 2px solid #009cab;
+    position: absolute;
+    opacity:1;
+    top: 0;
+    left: -21px;
+    bottom: 0px;
 }
 
 body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
