@@ -187,28 +187,84 @@ const TIPS = [
     });
   };
 
+/* higher level HTTP abstractions */
+
+const get = async (url, opts = {}) => {
+  try {
+    console.time(`REQ: ${url}`);
+    let resp = await fetch(url, opts);
+    let blob = await resp.blob();
+    let html = await blob.text();
+    console.timeEnd(`REQ: ${url}`);
+    return html
+  }
+  catch(error) {
+    console.log(error);
+    return null
+  }
+
+};
+
+// move to utility?
+const trimBody = (html) => {
+  let start = html.indexOf("<body");
+  html = html.slice(start);
+  let end = html.indexOf("</body>");
+  return html.slice(0,end+7)
+};
+
+const db = localStorage;
+
+class User {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+
+  get sidebar() {
+    let dom = $(this.profileHTML);
+    return dom.parentNode.querySelector(".sidebar")
+  }
+
+}
 class Users {
 
-    static async get(id) {
-        // let user = User.find(id)
-        // if (user) return user
-
-        let page = await fetch(`https://exercism.io/profiles/${id}?track_id=999`)
-            .then((resp) => resp.blob())
-            .then((blob) => blob.text())
-            .then((html) => this.fromHTML(html))
-            .catch(error => null);
-        return page
+  static find(id) {
+    let item;
+    if (item = db.getItem(`users/${id}`)) {
+      console.log(`CACHE: User[${id}]`);
+      console.log(item);
+      return new User(JSON.parse(item))
     }
-    static fromHTML(html) {
-      let start = html.indexOf("<body");
-      html = html.slice(start);
-      let end = html.indexOf("</body>");
-      html = html.slice(0,end+7);
+  }
 
-      let dom = $(html);
-      return dom.parentNode.querySelector(".sidebar")
-    }
+  static async get(id) {
+    let user = this.find(id);
+    if (user) return user
+
+    let html = await get(`https://exercism.io/profiles/${id}?track_id=999`);
+    if (!html) return null
+
+    return this.fromHTML(html, {userId: id})
+  }
+
+  static persist(user) {
+    user.saveAt = new Date();
+    db.setItem(`users/${user.id}`,JSON.stringify(user));
+  }
+
+  static fromHTML(html, {userId}) {
+    html = trimBody(html);
+
+    // todo handle sidebar not found
+
+    let user = new User({
+      id: userId,
+      profileHTML: html,
+      syncAt: new Date()
+    });
+
+    return user
+  }
 }
 
 class MentorSolutionView {
@@ -217,7 +273,9 @@ class MentorSolutionView {
     if (!profileLink) return;
 
     let userid = profileLink.innerHTML;
-    let sidebar = await Users.get(userid);
+    let user = await Users.get(userid);
+    Users.persist(user);
+    let sidebar = user.sidebar;
 
     if (sidebar.querySelector(".badge.mentor")) {
       sidebar.querySelector(".name").classList.add("mentor");
@@ -261,8 +319,6 @@ const boot = async () => {
   cleanerUI();
   addNewSolutionsMenuLink();
 
-
-
   if (getEditor()) {
     if (onMacintosh())
       fixEditorKeystrokes();
@@ -270,24 +326,6 @@ const boot = async () => {
   }
 
   new MentorSolutionView().render();
-
-  // document.querySelector(".rhs").insertAdjacentElement("afterbegin", sidebar)
-
-  // console.log(user)
-
-  // let start = user.indexOf("<body")
-  // user= user.slice(start)
-  // let end = user.indexOf("</body>")
-  // user = user.slice(0,end+7)
-
-  // user = user.replace(/[\s\S]*?<body.*>/gm,"")
-  // console.log(user)
-  // let data = $(user)
-  // console.log(data)
-  // document.body.appendChild(data)
-  // let sidebar = data.parentNode.querySelector(".sidebar")
-  // console.log(sidebar.innerHTML)
-  // console.log(user)
 
   // fetch("https://exercism.io/my/notifications")
   //   .then((resp) => resp.blob())

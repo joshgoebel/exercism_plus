@@ -7,7 +7,9 @@ export class MentorSolutionView {
     if (!profileLink) return;
 
     let userid = profileLink.innerHTML
-    let sidebar = await Users.get(userid)
+    let user = await Users.get(userid)
+    Users.persist(user)
+    let sidebar = user.sidebar
 
     if (sidebar.querySelector(".badge.mentor")) {
       sidebar.querySelector(".name").classList.add("mentor")
