@@ -157,6 +157,38 @@ header {
     display: none;
 }
 
+.widget-iterations-nav .title {
+    font-size:14px !important;
+    margin-top:0 !important;
+    padding-bottom: 8px !important;
+}
+
+header .notifications {
+    background: transparent !important;
+}
+
+#mentor-solution-page .track-header {
+    padding: 30px 0 !important;
+    background: #009cab !important;
+}
+#mentor-solution-page .tools-bar .notification {
+    color: #333 !important;
+    font-weight: 500 !important;
+}
+#mentor-solution-page .tools-bar .mentoring-notes {
+    padding-right: 0 !important
+}
+#mentor-solution-page .tools-bar {
+    max-width:1200px;
+    background: transparent !important;
+    margin: 0 auto !important;
+    margin-bottom:20px !important;
+    opacity: 0.8;
+    border: 0 !important;
+    padding:10px 0 !important;
+    border-bottom: 2px solid #009cab55 !important;
+}
+
 /* testimonials pop */
 
 .testimonial .feedback i {
