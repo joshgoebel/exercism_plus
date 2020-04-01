@@ -22,7 +22,7 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 
 ### Inline Student Profiles
 
-<img src="https://raw.githubusercontent.com/yyyc514/exercism_plus/docs/sample/who_profile.png" width="500" />
+<img src="https://raw.githubusercontent.com/yyyc514/exercism_plus/master/sample/who_profile.png" width="500" />
 
 ### Textual Analysis Engine
 
