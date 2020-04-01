@@ -1,38 +1,49 @@
-# Exercism Plus
+# Exercism Plus Chrome Extension
 
 Exercism Plus is a small Chrome Extension to add additional mentoring functionality to the
 already amazing [Exercism.io](https://exercism.io/) service.
 
-## What does it do?
+This is mostly for mentors, you probably won't get a lot out of it as a student.
 
-- Thoughtful UI tweaks and subtle design cleanups (less bold everywhere, to name a big one)
-- Adds "New solutions" link to the site menu (my workflow is heavy on this and the Notifications view)
-- Adds &#8984;B and &#8984;I shortcuts for bold and italic to the response editor for Mac
-- Adds a textual analysis engine to the text editor to help prevent common anti-patterns
+## Features
 
-## TODO
+- Thoughtful UI tweaks and subtle design cleanups (less bold everywhere, a bit softer, etc.)
+- Some accessibility and contrast improvements throughout
+- <a href="#inline-student-profiles">Inline student profiles</a> to provide context for who you are mentoring
+- <a href="#keybindings">Keybindings</a> for common tasks
+- <a href="#textual-analysis-engine">Textual analysis engine</a> - to help prevent common mentoring anti-patterns
+- Add a "Queue" (New solutions) link to the site menu (my workflow is heavy on this and the Notifications view)
 
-- [ ] More textual analysis anti-patterns
-- [ ] Real build engine to make codebase modular (rollup)
-- Configurable/custom textual analysis?
-- Configuration page?
+### Keybindings
 
-## Textual Analysis Engine
+- `n` Queue (Next solutions)
+- `;` Notifications
+- - Adds &#8984;B and &#8984;I keybindings for Bold and Italic to the editor on Macs
 
-### What it looks like
+### Inline Student Profiles
+
+<img src="https://raw.githubusercontent.com/yyyc514/exercism_plus/docs/sample/who_profile.png" width="500" />
+
+### Textual Analysis Engine
 
 ![Textual analysis example](https://raw.githubusercontent.com/yyyc514/exercism_plus/master/sample/snap.png)
 
-### How it works
+#### How it works
 
 Your response text is first stripped of code blocks and then analyzed with regular
 expressions. If a given regular expression matches then the corresponding tip
 will be shown. Programmatic matchers can also be written that do textual analysis with
 Javascript rather than regular expression, for more flexibility.
 
+## TODO
+
+- [ ] More textual analysis anti-patterns
+- Configurable/custom textual analysis?
+- Configuration page?
+
 ## Getting the Extension
 
-Currently just download it from Git and install it in Chrome Developer Mode.
+Currently just download it from Git and install it in Chrome Developer Mode. The repository also includes a `extension.crx` file now if that is easier for you.
 
 ## Contributing
 

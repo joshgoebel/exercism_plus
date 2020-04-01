@@ -95,7 +95,6 @@ const cleanupSolutionList = () => {
       handle.remove();
       let user = handle.innerHTML.replace("'s","");
       el.innerHTML = `${el.innerHTML} by ${user}`;
-      // el.insertAdjacentElement("afterend",$(`<span class='iteration'>by ${user}</span>`))
   });
 };
 
@@ -317,9 +316,24 @@ const redirectToMentoringURL = () => {
   }
 };
 
-document.addEventListener("keyup", (ev) => {
-  console.log(ev);
-});
+const keybindings = () => {
+  // todo abstract way more later
+  document.addEventListener("keyup", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+    if (event.target.tagName=="INPUT") return;
+    if (event.target.tagName=="TEXTAREA") return;
+
+    if (event.key=="n") {
+      redirect("/mentor/dashboard/next_solutions");
+    }
+    if (event.key==";") {
+      redirect("/my/notifications");
+    }
+    // console.log(ev)
+  });
+
+};
 
 const boot = async () => {
   redirectToMentoringURL();
@@ -333,6 +347,7 @@ const boot = async () => {
   }
 
   new MentorSolutionView().render();
+  keybindings();
 
   // fetch("https://exercism.io/my/notifications")
   //   .then((resp) => resp.blob())
