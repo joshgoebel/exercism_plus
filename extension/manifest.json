@@ -7,7 +7,7 @@
         {
           "matches": ["https://exercism.io/*"],
           "css": ["styles.css"],
-          "js": ["script.js"],
+          "js": ["runtime.js"],
           "run_at": "document_start"
         }
       ],
