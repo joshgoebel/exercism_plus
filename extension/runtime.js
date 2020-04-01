@@ -291,7 +291,7 @@ class MentorSolutionView {
     sidebar.querySelectorAll(".badge").forEach((badge) =>
       badge.innerHTML = badge.innerHTML.replace("mentor",""));
 
-    let discussion = document.querySelector(".claimed-section") || document.querySelector(".discussion");
+    let discussion = document.querySelector(".discussion") || document.querySelector(".claimed-section");
     discussion.insertAdjacentElement("beforebegin", sidebar);
     if (discussion.classList.contains("discussion")) {
       discussion.querySelector("h3").innerHTML="Discussion";
