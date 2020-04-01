@@ -23,7 +23,14 @@ const redirectToMentoringURL = () => {
   }
 }
 
-const boot = () => {
+document.addEventListener("keyup", (ev) => {
+  console.log(ev)
+})
+
+import { Users } from "./db/users"
+import { MentorSolutionView } from "./mentor_solution"
+
+const boot = async () => {
   redirectToMentoringURL();
   cleanerUI();
   addNewSolutionsMenuLink();
@@ -33,6 +40,8 @@ const boot = () => {
       fixEditorKeystrokes();
     editorTips();
   }
+
+  new MentorSolutionView().render()
 
   // fetch("https://exercism.io/my/notifications")
   //   .then((resp) => resp.blob())

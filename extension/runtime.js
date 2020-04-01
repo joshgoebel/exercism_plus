@@ -187,6 +187,55 @@ const TIPS = [
     });
   };
 
+class Users {
+
+    static async get(id) {
+        // let user = User.find(id)
+        // if (user) return user
+
+        let page = await fetch(`https://exercism.io/profiles/${id}?track_id=999`)
+            .then((resp) => resp.blob())
+            .then((blob) => blob.text())
+            .then((html) => this.fromHTML(html))
+            .catch(error => null);
+        return page
+    }
+    static fromHTML(html) {
+      let start = html.indexOf("<body");
+      html = html.slice(start);
+      let end = html.indexOf("</body>");
+      html = html.slice(0,end+7);
+
+      let dom = $(html);
+      return dom.parentNode.querySelector(".sidebar")
+    }
+}
+
+class MentorSolutionView {
+  async render() {
+    let profileLink = document.querySelector("#mentor-solution-page .track-header .byline a");
+    if (!profileLink) return;
+
+    let userid = profileLink.innerHTML;
+    let sidebar = await Users.get(userid);
+
+    if (sidebar.querySelector(".badge.mentor")) {
+      sidebar.querySelector(".name").classList.add("mentor");
+    }
+    sidebar.querySelectorAll(".badge").forEach((badge) =>
+      badge.innerHTML = badge.innerHTML.replace("mentor",""));
+
+    let discussion = document.querySelector(".claimed-section") || document.querySelector(".discussion");
+    discussion.insertAdjacentElement("beforebegin", sidebar);
+    if (discussion.classList.contains("discussion")) {
+      discussion.querySelector("h3").innerHTML="Discussion";
+      sidebar.insertAdjacentElement("afterbegin",$("<h4>Who you're mentoring</h4>"));
+    } else {
+      sidebar.insertAdjacentElement("afterbegin",$("<h4>Who you'll be mentoring</h4>"));
+    }
+  }
+}
+
 const addNewSolutionsMenuLink = () => {
   let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
   dashboard.insertAdjacentElement('afterend',
@@ -203,16 +252,42 @@ const redirectToMentoringURL = () => {
   }
 };
 
-const boot = () => {
+document.addEventListener("keyup", (ev) => {
+  console.log(ev);
+});
+
+const boot = async () => {
   redirectToMentoringURL();
   cleanerUI();
   addNewSolutionsMenuLink();
+
+
 
   if (getEditor()) {
     if (onMacintosh())
       fixEditorKeystrokes();
     editorTips();
   }
+
+  new MentorSolutionView().render();
+
+  // document.querySelector(".rhs").insertAdjacentElement("afterbegin", sidebar)
+
+  // console.log(user)
+
+  // let start = user.indexOf("<body")
+  // user= user.slice(start)
+  // let end = user.indexOf("</body>")
+  // user = user.slice(0,end+7)
+
+  // user = user.replace(/[\s\S]*?<body.*>/gm,"")
+  // console.log(user)
+  // let data = $(user)
+  // console.log(data)
+  // document.body.appendChild(data)
+  // let sidebar = data.parentNode.querySelector(".sidebar")
+  // console.log(sidebar.innerHTML)
+  // console.log(user)
 
   // fetch("https://exercism.io/my/notifications")
   //   .then((resp) => resp.blob())

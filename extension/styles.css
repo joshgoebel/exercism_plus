@@ -261,3 +261,66 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 #mentor-testimonials-page .solution .core {
     color: #179caacc !important;
 }
+
+/* sidebar */
+
+#mentor-solution-page .sidebar  h4 {
+font-weight: 400;
+color: #333;
+padding: 7px 0;
+border-bottom: 1px solid #ddd;
+margin-bottom: 13px;
+}
+
+#mentor-solution-page .sidebar {
+    margin:0em 0 1.5em;
+}
+#mentor-solution-page .sidebar .member-since,
+#mentor-solution-page .sidebar .helped-count,
+#mentor-solution-page .sidebar h3,
+#mentor-solution-page .sidebar a {
+    display: none;
+}
+#mentor-solution-page .sidebar .bio {
+    font-size:14px;
+    width:80% }
+#mentor-solution-page .sidebar .badges {
+    margin-top:5px;
+    margin-left:0px;
+}
+#mentor-solution-page .sidebar .name:after,
+#mentor-solution-page .sidebar .badges .badge {
+    font-size:10px;
+    color:#333;
+    border:1px solid #ccc;
+    padding:0px 4px;
+    letter-spacing: -0.2px;
+    display: inline-block;
+    border-radius: 3px;
+    background: #f7f7f7;
+    line-height: 1.6em;
+    margin-bottom:2px;
+}
+#mentor-solution-page .sidebar img {
+    box-shadow: 0px 0px 5px #666;
+    width:70px;
+    border-radius: 100%;
+    float:right;
+    margin-top:5px;
+    margin-left:20px;
+    margin-right:10px;
+    /* margin-bottom:1em; */
+}
+#mentor-solution-page .sidebar .name {
+    font-weight: bold;
+    font-size:16px;
+}
+#mentor-solution-page .sidebar .name.mentor:after {
+    content: "Also a Mentor";
+    font-weight: normal;
+    background: rgba(58,178,146,0.1);
+    border: 1px solid #ddd;
+    margin-left:10px;
+    top:-3px;
+    position: relative;
+}
