@@ -9,6 +9,8 @@ export const cleanerUI = () => {
     addFooter();
     useRealName();
     cleanupBreadcrumbs();
+    if (document.querySelector("a.leave-button"))
+        document.querySelector("a.leave-button").innerHTML="Leave"
   }
 
 const collapseCoreExercises = () => {

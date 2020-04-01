@@ -325,3 +325,16 @@ margin-bottom: 13px;
     top:-3px;
     position: relative;
 }
+
+.floating-editor {
+    position: fixed;
+    top: 100px;
+    /* right: 150px; */
+    background: white;
+    /* padding: 10px 20px; */
+    box-shadow: 0px 0px 10px #666;
+    border: 2px solid steelblue;
+    border-radius: 5px;
+    z-index: 100;
+    width: 500px;
+}
