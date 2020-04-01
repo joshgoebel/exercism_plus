@@ -1,9 +1,9 @@
 'use strict';
 
-const getEditor$1 = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
+const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
 
 const fixEditorKeystrokes = () => {
-    if(!getEditor$1()) return;
+    if(!getEditor()) return;
 
     let editors = document.querySelectorAll('textarea[name="discussion_post[content]"]');
 
@@ -29,7 +29,7 @@ const onMacintosh = () => {
 
 const redirect = (url) => window.location.href = url;
 
-function $$1(html) {
+function $(html) {
   var wrapper = document.createElement('div');
   wrapper.innerHTML = html.trim();
   return wrapper.firstChild;
@@ -82,7 +82,7 @@ const addFooter = () => {
 let legal = document.querySelector("footer .legal");
 if (!legal) return;
 
-legal.insertAdjacentElement('beforebegin',$$1(LEGAL));
+legal.insertAdjacentElement('beforebegin',$(LEGAL));
 legal.style.marginTop=0;
 };
 
@@ -190,12 +190,8 @@ const TIPS = [
 const addNewSolutionsMenuLink = () => {
   let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
   dashboard.insertAdjacentElement('afterend',
-    $$1("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+    $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
 };
-
-
-
-
 
 const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/;
 const NOT_PUBLIC_TEXT = "solution is not public";
@@ -212,7 +208,7 @@ const boot = () => {
   cleanerUI();
   addNewSolutionsMenuLink();
 
-  if (getEditor$1()) {
+  if (getEditor()) {
     if (onMacintosh())
       fixEditorKeystrokes();
     editorTips();

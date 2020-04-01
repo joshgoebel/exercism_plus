@@ -1,3 +1,7 @@
+import { getEditor } from "./editor"
+import { $ } from "./utils"
+
+
 const TIPS = [
     [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
     [/\b(never|always)\b/i, "Try not to speak in absolutes."],
