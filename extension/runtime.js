@@ -291,7 +291,10 @@ class MentorSolutionView {
     sidebar.querySelectorAll(".badge").forEach((badge) =>
       badge.innerHTML = badge.innerHTML.replace("mentor",""));
 
-    let discussion = document.querySelector(".discussion") || document.querySelector(".claimed-section");
+    // if discussion is immediately under rhs then there is an ongoing visible discussion
+    // otherwise this might not be claimed yet
+    let discussion = document.querySelector(".rhs > .discussion") || document.querySelector(".claimed-section");
+    console.log(discussion);
     discussion.insertAdjacentElement("beforebegin", sidebar);
     if (discussion.classList.contains("discussion")) {
       discussion.querySelector("h3").innerHTML="Discussion";
