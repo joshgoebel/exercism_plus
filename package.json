@@ -1,0 +1,26 @@
+{
+  "name": "exercism_plus",
+  "version": "0.2.0",
+  "description": "Mentor enhancements for the great Exercism website!",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyyc514/exercism_plus.git"
+  },
+  "keywords": [
+    "exercism"
+  ],
+  "author": "Josh Goebel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yyyc514/exercism_plus/issues"
+  },
+  "homepage": "https://github.com/yyyc514/exercism_plus#readme",
+  "devDependencies": {
+    "rollup": "^2.3.2",
+    "rollup-plugin-scss": "^2.1.0"
+  }
+}
