@@ -14,6 +14,10 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 - <a href="#textual-analysis-engine">Textual analysis engine</a> - to help prevent common mentoring anti-patterns
 - Add a "Queue" (New solutions) link to the site menu (my workflow is heavy on this and the Notifications view)
 
+### Subtle usability improvements
+
+- Solutions become sticky when scrolling a long discussion - so that you can always see the source (provided it fits in your browsers vertical space)
+
 ### Keybindings
 
 - `n` Queue (Next solutions)
