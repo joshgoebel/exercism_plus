@@ -2,7 +2,31 @@ import { $ } from "./utils"
 import { Users } from "./db/users"
 
 export class MentorSolutionView {
+  stickyLeftSide() {
+    let panes = document.querySelector("#mentor-solution-page .lhs .tabs-and-panes")
+
+    const doSticky = () => {
+      let windowHeight = window.innerHeight
+      let height = panes.offsetHeight
+      if (windowHeight > height) {
+        panes.classList.add("stickySubmission")
+      } else {
+        panes.classList.remove("stickySubmission")
+      }
+      // HACK: because of bug in Exercism tabs.js implementation
+      panes.className = panes.className.replace(/^(.*)\b(selected-\d)\b(.*)$/,"$1 $3 $2")
+    }
+    doSticky()
+    // every time a tab is clicked we need to rethink our stickiness because
+    // the height of the content can change
+    panes.addEventListener("click", doSticky)
+  }
+
   async render() {
+
+    this.stickyLeftSide();
+
+
     let profileLink = document.querySelector("#mentor-solution-page .track-header .byline a")
     if (!profileLink) return;
 

@@ -338,3 +338,8 @@ margin-bottom: 13px;
     z-index: 100;
     width: 500px;
 }
+
+.stickySubmission {
+    position: sticky;
+    top:15px;
+}

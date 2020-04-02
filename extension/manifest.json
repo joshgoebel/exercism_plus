@@ -1,7 +1,7 @@
 {
     "name": "Exercism Plus",
     "version": "0.2",
-    "description": "Enhancements for the great Exercism website!",
+    "description": "Mentor enhancements for the great Exercism website!",
     "manifest_version": 2,
     "content_scripts": [
         {
