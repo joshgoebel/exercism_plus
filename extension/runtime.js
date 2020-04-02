@@ -42,51 +42,15 @@ const config = {
   };
 
 const cleanerUI = () => {
-    collapseCoreExercises();
-    renameMentorTabs();
     cleanupSolutionList();
     cleanupPostsList();
-    addFooter();
     useRealName();
-    cleanupBreadcrumbs();
     if (document.querySelector("a.leave-button"))
         document.querySelector("a.leave-button").innerHTML="Leave";
   };
 
-const collapseCoreExercises = () => {
-document.querySelectorAll("ul.exercises li a.label").forEach(el => {
-    if (el.innerHTML.includes("· 0"))
-    el.parentNode.removeChild(el);
-    el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
-});
-};
 
-const renameMentorTabs = () => {
-let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]');
-let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]');
-if (!waiting) return;
 
-queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
-    "Queue $1");
-waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
-    "Mentoring $1");
-};
-
-const LEGAL = `
-<div class="legal">
-Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
-devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
-</div>
-`;
-
-const addFooter = () => {
-let legal = document.querySelector("footer .legal");
-if (!legal) return;
-
-legal.insertAdjacentElement('beforebegin',$(LEGAL));
-legal.style.marginTop=0;
-};
 
 const cleanupSolutionList = () => {
   document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
@@ -121,17 +85,6 @@ document.querySelectorAll(".post-body .user-handle").forEach((el) => {
     el.innerHTML = "Exercism";
     }
 });
-};
-
-const cleanupBreadcrumbs = () => {
-let breadcrumbs = document.querySelector("nav.breadcrumb");
-if (!breadcrumbs) return;
-
-let links = breadcrumbs.querySelectorAll("a");
-// ugh, what's the point of a single breadcrumb that points to our current page?
-if (links.length === 1) {
-    breadcrumbs.remove();
-}
 };
 
 const TIPS = [
@@ -194,6 +147,72 @@ const TIPS = [
       },500);
     });
   };
+
+const renameDashboardTabs = () => {
+    let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]');
+    let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]');
+    if (!waiting) return;
+
+    queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
+        "Queue $1");
+    waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
+        "Mentoring $1");
+};
+
+const collapseCoreExercises = () => {
+    document.querySelectorAll("ul.exercises li a.label").forEach(el => {
+        if (el.innerHTML.includes("· 0"))
+        el.parentNode.removeChild(el);
+        el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
+    });
+};
+
+class DashboardController {
+  constructor() {
+    renameDashboardTabs();
+  }
+
+  next_solutions() {
+    collapseCoreExercises();
+  }
+  your_solutions() {
+
+  }
+  testimonials() {
+
+  }
+}
+
+class Route {
+  constructor(url, routeTo) {
+    this.matcher = url;
+    this.destination = routeTo;
+  }
+  dispatch() {
+    let [controllerName, action] = this.destination.split("#");
+    controllerName = `${controllerName}Controller`;
+    eval(`new ${controllerName}().${action}()`);
+  }
+  match(location) {
+    // TODO: more complex matchers
+    return location.pathname === this.matcher
+  }
+}
+
+class Router {
+  constructor() {
+    this.table = [];
+  }
+  go(location) {
+    let route = this.table.find((route) => route.match(location));
+    if (route)
+      route.dispatch();
+  }
+  get(url, routeTo) {
+    this.table.push(new Route(url, routeTo));
+  }
+
+}
 
 /* higher level HTTP abstractions */
 
@@ -329,10 +348,39 @@ class MentorSolutionView {
   }
 }
 
+const cleanupBreadcrumbs = () => {
+    let breadcrumbs = document.querySelector("nav.breadcrumb");
+    if (!breadcrumbs) return;
+
+    let links = breadcrumbs.querySelectorAll("a");
+    // ugh, what's the point of a single breadcrumb that points to our current page?
+    if (links.length === 1) {
+        breadcrumbs.remove();
+    }
+};
+
 const addNewSolutionsMenuLink = () => {
-  let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
-  dashboard.insertAdjacentElement('afterend',
-    $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
+    dashboard.insertAdjacentElement('afterend',
+        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+};
+
+
+
+const LEGAL = `
+<div class="legal">
+Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
+devoted to helping improve your Exercism experience, and supported by
+<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
+</div>
+`;
+
+const addFooter = () => {
+    let legal = document.querySelector("footer .legal");
+    if (!legal) return;
+
+    legal.insertAdjacentElement('beforebegin',$(LEGAL));
+    legal.style.marginTop=0;
 };
 
 const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/;
@@ -364,10 +412,36 @@ const keybindings = () => {
 
 };
 
+const router = new Router();
+
+let app = new Proxy(() => {}, {
+  apply: function(obj) {
+    return `${obj.controller}#${obj.action}`
+  },
+  get: function(obj, prop,receiver) {
+    if (prop[0] === prop[0].toUpperCase()) {
+      obj.controller = `${prop}`;
+    } else {
+      obj.action = prop;
+      // return `${obj.controller}#${obj.action}`
+    }
+    // console.log(`${obj.controller}#${obj.action}`)
+    // console.log(receiver)
+    return receiver
+  }
+} );
+
+// dashboard
+// router.get("/mentor/dashboard/next_solutions", "Dashboard#next_solutions")
+// console.log(app.Dashboard.next_solutions)
+router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions());
+router.get("/mentor/dashboard/your_solutions","");
+router.get("/mentor/dashboard/testimonials","");
+
 const boot = async () => {
   redirectToMentoringURL();
   cleanerUI();
-  addNewSolutionsMenuLink();
+
 
   if (getEditor()) {
     if (onMacintosh())
@@ -378,11 +452,11 @@ const boot = async () => {
   new MentorSolutionView().render();
   keybindings();
 
-  // fetch("https://exercism.io/my/notifications")
-  //   .then((resp) => resp.blob())
-  //   .then((blob) => blob.text())
-  //   .then((text) => console.log(text))
+  addNewSolutionsMenuLink();
+  addFooter();
+  cleanupBreadcrumbs();
 
+  router.go(location);
 };
 
 document.addEventListener("DOMContentLoaded", () => {

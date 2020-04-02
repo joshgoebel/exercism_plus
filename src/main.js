@@ -5,13 +5,9 @@ import { cleanerUI } from "./user_interface"
 import { config } from "./config"
 import { $ } from "./utils"
 import { editorTips } from "./textual_analysis"
+import { DashboardController } from "./controllers/dashboard"
+import { Router } from "./lib/router"
 
-
-const addNewSolutionsMenuLink = () => {
-  let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
-  dashboard.insertAdjacentElement('afterend',
-    $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"))
-}
 
 const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/
 const NOT_PUBLIC_TEXT = "solution is not public"
@@ -45,10 +41,38 @@ const keybindings = () => {
 
 }
 
+const router = new Router();
+
+let app = new Proxy(() => {}, {
+  apply: function(obj) {
+    return `${obj.controller}#${obj.action}`
+  },
+  get: function(obj, prop,receiver) {
+    if (prop[0] === prop[0].toUpperCase()) {
+      obj.controller = `${prop}`
+    } else {
+      obj.action = prop
+      // return `${obj.controller}#${obj.action}`
+    }
+    // console.log(`${obj.controller}#${obj.action}`)
+    // console.log(receiver)
+    return receiver
+  }
+} )
+
+// dashboard
+// router.get("/mentor/dashboard/next_solutions", "Dashboard#next_solutions")
+// console.log(app.Dashboard.next_solutions)
+router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions())
+router.get("/mentor/dashboard/your_solutions","")
+router.get("/mentor/dashboard/testimonials","")
+
+import * as commonViews from "./views/common"
+
 const boot = async () => {
   redirectToMentoringURL();
   cleanerUI();
-  addNewSolutionsMenuLink();
+
 
   if (getEditor()) {
     if (utils.onMacintosh())
@@ -59,11 +83,11 @@ const boot = async () => {
   new MentorSolutionView().render()
   keybindings();
 
-  // fetch("https://exercism.io/my/notifications")
-  //   .then((resp) => resp.blob())
-  //   .then((blob) => blob.text())
-  //   .then((text) => console.log(text))
+  commonViews.addNewSolutionsMenuLink();
+  commonViews.addFooter();
+  commonViews.cleanupBreadcrumbs();
 
+  router.go(location)
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -2,51 +2,15 @@ import { config } from "./config"
 import { $ } from "./utils"
 
 export const cleanerUI = () => {
-    collapseCoreExercises();
-    renameMentorTabs();
     cleanupSolutionList();
     cleanupPostsList();
-    addFooter();
     useRealName();
-    cleanupBreadcrumbs();
     if (document.querySelector("a.leave-button"))
         document.querySelector("a.leave-button").innerHTML="Leave"
   }
 
-const collapseCoreExercises = () => {
-document.querySelectorAll("ul.exercises li a.label").forEach(el => {
-    if (el.innerHTML.includes("· 0"))
-    el.parentNode.removeChild(el);
-    el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
-})
-}
 
-const renameMentorTabs = () => {
-let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]')
-let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]')
-if (!waiting) return;
 
-queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
-    "Queue $1")
-waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
-    "Mentoring $1")
-}
-
-const LEGAL = `
-<div class="legal">
-Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
-devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
-</div>
-`
-
-const addFooter = () => {
-let legal = document.querySelector("footer .legal")
-if (!legal) return;
-
-legal.insertAdjacentElement('beforebegin',$(LEGAL))
-legal.style.marginTop=0;
-}
 
 const cleanupSolutionList = () => {
   document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
@@ -81,16 +45,5 @@ document.querySelectorAll(".post-body .user-handle").forEach((el) => {
     el.innerHTML = "Exercism";
     }
 })
-}
-
-const cleanupBreadcrumbs = () => {
-let breadcrumbs = document.querySelector("nav.breadcrumb")
-if (!breadcrumbs) return;
-
-let links = breadcrumbs.querySelectorAll("a")
-// ugh, what's the point of a single breadcrumb that points to our current page?
-if (links.length === 1) {
-    breadcrumbs.remove();
-}
 }
 
