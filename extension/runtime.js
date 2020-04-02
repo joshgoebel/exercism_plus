@@ -90,7 +90,7 @@ legal.style.marginTop=0;
 
 const cleanupSolutionList = () => {
   document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
-      el.innerHTML = el.innerHTML.replace("for mentoring","");
+      el.innerHTML = el.innerHTML.replace(/for mentoring|about/g,"");
   });
   document.querySelectorAll(".solution .details .iteration").forEach((el) => {
       let handle = el.parentNode.parentNode.querySelector(".title .handle");
