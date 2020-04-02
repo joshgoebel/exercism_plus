@@ -5,5 +5,6 @@ export default {
     output: {
       file: 'extension/runtime.js',
       format: 'cjs'
-    }
+    },
+    treeshake: false
 }
