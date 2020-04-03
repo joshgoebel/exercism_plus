@@ -14,7 +14,8 @@ export const useRealNames = () => {
             role.remove();
         }
         // there is only a single student it's hard to get confused about who that is
-        if (role && role.innerHTML.trim()==="Student") {
+        // But don't remove the role if we're looking at someone else's review.
+        if (role && role.innerHTML.trim()==="Student" && el.innerHTML !== "[Redacted]") {
             role.remove()
         }
         if (el.innerHTML === "Automated Message") {
