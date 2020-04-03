@@ -22,7 +22,10 @@ export const cleanupSolutionList = () => {
         el.innerHTML = el.innerHTML.replace(/Submitted|for mentoring|about/g,"")
     })
     document.querySelectorAll(".solution .details .extra .iteration").forEach((el) => {
-        el.innerHTML = el.innerHTML.replace(/#/g,"")
+        el.innerHTML = el.innerHTML
+            .replace(/#/g,"")
+            .replace(/Iteration 1/g,"")
+
     })
     document.querySelectorAll(".solution .details .iteration").forEach((el) => {
         let handle = el.parentNode.parentNode.querySelector(".title .handle")
