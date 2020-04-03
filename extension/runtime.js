@@ -1,7 +1,5 @@
 'use strict';
 
-const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
-
 const onMacintosh = () => {
   return /Macintosh/.test(navigator.userAgent)
 };
@@ -14,94 +12,98 @@ function $(html) {
   return wrapper.firstChild;
 }
 
-// TODO: Add settings panel
-const config = {
-    username: "ajoshguy",
-    realname: "Josh G."
-  };
-
-const cleanerUI = () => {
-    useRealName();
-  };
-
-
-const useRealName = () => {
-document.querySelectorAll(".post-body .user-handle").forEach((el) => {
-    let role = el.parentNode.querySelector(".user-role");
-    if (el.innerHTML === config.username) {
-    el.innerHTML = config.realname;
-    role.remove();
-    }
-    // there is only a single student it's hard to get confused about who that is
-    if (role && role.innerHTML.trim()==="Student") {
-    role.remove();
-    }
-    if (el.innerHTML === "Automated Message") {
-    el.innerHTML = "Exercism";
-    }
-});
-};
-
-const TIPS = [
-    [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
-    [/\b(never|always)\b/i, "Try not to speak in absolutes."],
-    [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
-    [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
-    [/\breally\b/i,"Is really <i>really</i> necessary?"],
-    [/\byou do not\b/i,"Try speaking more suggestively, less imperatively."],
-    [/\byou don't\b/i,"Try speaking more suggestively, less imperatively."],
-    [/\byou need\b/i,"Try speaking more suggestively, less imperatively."],
-    [/\byou\b/i,"Is it them, or is it the code?  Avoid 'you' if possible."],
-    [/\byour code\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
-    [/\bi think\b/i, "You think? Is there a way to sound less uncertain?"],
-  ];
-
-  const CODE_BLOCK_SNIPPET_RE = /```[\s\S]*?```/g;
-  const INLINE_CODE_RE = /`.*?`/g;
-  const QUOTED_RE = /^>.*$/m;
-
-  class ContentParser {
-    constructor(text) {
-      this.text = text;
-    }
-    textualContent() {
-      let text = this.text
-        .replace(CODE_BLOCK_SNIPPET_RE,"")
-        .replace(INLINE_CODE_RE,"")
-        .replace(QUOTED_RE,"")
-        .trim();
-      return text
+class Route {
+  constructor(url, routeTo) {
+    this.matcher = url;
+    this.destination = routeTo;
+  }
+  dispatch() {
+    let [controllerName, action] = this.destination.split("#");
+    controllerName = `${controllerName}Controller`;
+    eval(`new ${controllerName}().${action}({match:this._lastMatch})`);
+    this._lastMatch = null;
+  }
+  // TODO: more complex matchers
+  match(location) {
+    // regex matchers
+    if (typeof this.matcher === "object") {
+      let match = location.pathname.match(this.matcher);
+      if (match) {
+        this._lastMatch = match;
+        return true
+      }
+    } else {
+      return location.pathname === this.matcher
     }
   }
+}
 
-  const editorTips = () => {
-    let editor = getEditor();
-    let markdownPane = document.querySelector('.pane.markdown');
-    let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"));
-    editor.closest("form").addEventListener("submit", (event) => {
-      tips.innerHTML="";
-      if (editor._tipTimer) {
-        clearTimeout(editor._tipTimer);
-        editor._tipTimer = null;
-      }
-    });
-    editor.addEventListener("keyup", (event) => {
-      if (editor._tipTimer)
-        return;
-
-      // we only fire every 500ms, should be responsive enough
-      editor._tipTimer = setTimeout(() => {
-        editor._tipTimer = null;
-        let text = new ContentParser(editor.value).textualContent();
-        tips.innerHTML="";
-        for (let [matcher,suggestion] of TIPS) {
-          if (matcher.test(text)) {
-            tips.appendChild($(`<li>${suggestion}</li>`));
-          }
+class Router {
+  constructor() {
+    this.table = [];
+  }
+  go(location) {
+    let route = this.table.find((route) => route.match(location));
+    if (route)
+      route.dispatch();
+  }
+  get(url, routeTo) {
+    this.table.push(new Route(url, routeTo));
+  }
+  static get app() {
+    return new Proxy(() => {}, {
+      apply: function(obj) {
+        return `${obj.controller}#${obj.action}`
+      },
+      get: function(obj, prop,receiver) {
+        if (prop[0] === prop[0].toUpperCase()) {
+          obj.controller = `${prop}`;
+        } else {
+          obj.action = prop;
+          // return `${obj.controller}#${obj.action}`
         }
-      },500);
-    });
-  };
+        // console.log(`${obj.controller}#${obj.action}`)
+        // console.log(receiver)
+        return receiver
+      }
+    } )
+  }
+}
+
+const cleanupBreadcrumbs = () => {
+    let breadcrumbs = document.querySelector("nav.breadcrumb");
+    if (!breadcrumbs) return;
+
+    let links = breadcrumbs.querySelectorAll("a");
+    // ugh, what's the point of a single breadcrumb that points to our current page?
+    if (links.length === 1) {
+        breadcrumbs.remove();
+    }
+};
+
+const addNewSolutionsMenuLink = () => {
+    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
+    dashboard.insertAdjacentElement('afterend',
+        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+};
+
+
+
+const LEGAL = `
+<div class="legal">
+Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
+devoted to helping improve your Exercism experience, and supported by
+<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
+</div>
+`;
+
+const addFooter = () => {
+    let legal = document.querySelector("footer .legal");
+    if (!legal) return;
+
+    legal.insertAdjacentElement('beforebegin',$(LEGAL));
+    legal.style.marginTop=0;
+};
 
 const cleanupPostsTimestamps = () => {
     document.querySelectorAll(".post-body .created-at").forEach((el) => {
@@ -112,6 +114,36 @@ const renameLeaveButton = () => {
     if (document.querySelector("a.leave-button"))
         document.querySelector("a.leave-button").innerHTML="Leave Discussion";
 };
+
+// TODO: Add settings panel
+const config = {
+    username: "ajoshguy",
+    realname: "Josh G."
+  };
+
+const whoami = () => {
+    let person = document.querySelector(".logged-in .dropdown .person strong");
+    return person && person.innerHTML
+};
+
+const useRealNames = () => {
+    document.querySelectorAll(".post-body .user-handle").forEach((el) => {
+        let role = el.parentNode.querySelector(".user-role");
+        if (el.innerHTML === whoami()) {
+            el.innerHTML = config.realname;
+            role.remove();
+        }
+        // there is only a single student it's hard to get confused about who that is
+        if (role && role.innerHTML.trim()==="Student") {
+            role.remove();
+        }
+        if (el.innerHTML === "Automated Message") {
+            el.innerHTML = "Exercism";
+        }
+    });
+};
+
+const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
 
 const fixEditorKeystrokes = () => {
     if(!getEditor()) return;
@@ -268,6 +300,67 @@ class MentorSolutionView {
   }
 }
 
+const TIPS = [
+    [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
+    [/\b(never|always)\b/i, "Try not to speak in absolutes."],
+    [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
+    [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
+    [/\breally\b/i,"Is really <i>really</i> necessary?"],
+    [/\byou do not\b/i,"Try speaking more suggestively, less imperatively."],
+    [/\byou don't\b/i,"Try speaking more suggestively, less imperatively."],
+    [/\byou need\b/i,"Try speaking more suggestively, less imperatively."],
+    [/\byou\b/i,"Is it them, or is it the code?  Avoid 'you' if possible."],
+    [/\byour code\b/i, "Try <i>the code</i> vs <i>your code</i>, make it less personal."],
+    [/\bi think\b/i, "You think? Is there a way to sound less uncertain?"],
+  ];
+
+  const CODE_BLOCK_SNIPPET_RE = /```[\s\S]*?```/g;
+  const INLINE_CODE_RE = /`.*?`/g;
+  const QUOTED_RE = /^>.*$/m;
+
+  class ContentParser {
+    constructor(text) {
+      this.text = text;
+    }
+    textualContent() {
+      let text = this.text
+        .replace(CODE_BLOCK_SNIPPET_RE,"")
+        .replace(INLINE_CODE_RE,"")
+        .replace(QUOTED_RE,"")
+        .trim();
+      return text
+    }
+  }
+
+  const editorTips = () => {
+    let editor = getEditor();
+    let markdownPane = document.querySelector('.pane.markdown');
+    let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"));
+    editor.closest("form").addEventListener("submit", (event) => {
+      tips.innerHTML="";
+      if (editor._tipTimer) {
+        clearTimeout(editor._tipTimer);
+        editor._tipTimer = null;
+      }
+    });
+    editor.addEventListener("keyup", (event) => {
+      if (editor._tipTimer)
+        return;
+
+      // we only fire every 500ms, should be responsive enough
+      editor._tipTimer = setTimeout(() => {
+        editor._tipTimer = null;
+        let text = new ContentParser(editor.value).textualContent();
+        tips.innerHTML="";
+        for (let [matcher,suggestion] of TIPS) {
+          if (matcher.test(text)) {
+            tips.appendChild($(`<li>${suggestion}</li>`));
+          }
+        }
+      },500);
+    });
+  };
+
 const NOT_PUBLIC_TEXT = "solution is not public";
 
 class MentorController {
@@ -277,6 +370,7 @@ class MentorController {
     if (onMacintosh())
       fixEditorKeystrokes();
 
+    useRealNames();
     editorTips();
     cleanupPostsTimestamps();
     renameLeaveButton();
@@ -337,99 +431,6 @@ class DashboardController {
   }
 }
 
-class Route {
-  constructor(url, routeTo) {
-    this.matcher = url;
-    this.destination = routeTo;
-  }
-  dispatch() {
-    let [controllerName, action] = this.destination.split("#");
-    controllerName = `${controllerName}Controller`;
-    eval(`new ${controllerName}().${action}({match:this._lastMatch})`);
-    this._lastMatch = null;
-  }
-  // TODO: more complex matchers
-  match(location) {
-    // regex matchers
-    if (typeof this.matcher === "object") {
-      let match = location.pathname.match(this.matcher);
-      if (match) {
-        this._lastMatch = match;
-        return true
-      }
-    } else {
-      return location.pathname === this.matcher
-    }
-  }
-}
-
-class Router {
-  constructor() {
-    this.table = [];
-  }
-  go(location) {
-    let route = this.table.find((route) => route.match(location));
-    if (route)
-      route.dispatch();
-  }
-  get(url, routeTo) {
-    this.table.push(new Route(url, routeTo));
-  }
-  static get app() {
-    return new Proxy(() => {}, {
-      apply: function(obj) {
-        return `${obj.controller}#${obj.action}`
-      },
-      get: function(obj, prop,receiver) {
-        if (prop[0] === prop[0].toUpperCase()) {
-          obj.controller = `${prop}`;
-        } else {
-          obj.action = prop;
-          // return `${obj.controller}#${obj.action}`
-        }
-        // console.log(`${obj.controller}#${obj.action}`)
-        // console.log(receiver)
-        return receiver
-      }
-    } )
-  }
-}
-
-const cleanupBreadcrumbs = () => {
-    let breadcrumbs = document.querySelector("nav.breadcrumb");
-    if (!breadcrumbs) return;
-
-    let links = breadcrumbs.querySelectorAll("a");
-    // ugh, what's the point of a single breadcrumb that points to our current page?
-    if (links.length === 1) {
-        breadcrumbs.remove();
-    }
-};
-
-const addNewSolutionsMenuLink = () => {
-    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
-    dashboard.insertAdjacentElement('afterend',
-        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
-};
-
-
-
-const LEGAL = `
-<div class="legal">
-Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
-devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
-</div>
-`;
-
-const addFooter = () => {
-    let legal = document.querySelector("footer .legal");
-    if (!legal) return;
-
-    legal.insertAdjacentElement('beforebegin',$(LEGAL));
-    legal.style.marginTop=0;
-};
-
 const keybindings = () => {
   // todo abstract way more later
   document.addEventListener("keyup", (event) => {
@@ -464,7 +465,6 @@ router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution());
 
 
 const boot = async () => {
-  cleanerUI();
   keybindings();
 
   addNewSolutionsMenuLink();

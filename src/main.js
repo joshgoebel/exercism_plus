@@ -1,14 +1,10 @@
-
-import { getEditor } from "./editor"
 import * as utils from "./utils"
-import { cleanerUI } from "./user_interface"
-import { config } from "./config"
-import { $ } from "./utils"
-import { editorTips } from "./textual_analysis"
-import { MentorController } from "./controllers/mentor"
-import { DashboardController } from "./controllers/dashboard"
 import { Router } from "./lib/router"
 import * as commonViews from "./views/common"
+
+// controllers
+import { MentorController } from "./controllers/mentor"
+import { DashboardController } from "./controllers/dashboard"
 
 
 const keybindings = () => {
@@ -45,7 +41,6 @@ router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution())
 
 
 const boot = async () => {
-  cleanerUI();
   keybindings();
 
   commonViews.addNewSolutionsMenuLink();

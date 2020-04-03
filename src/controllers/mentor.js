@@ -1,5 +1,6 @@
 import * as utils from "../utils"
 import * as views from "../views/mentor"
+import * as discussionView from "../views/discussion"
 import { fixEditorKeystrokes } from "../fixups/bold_and_italic"
 import { MentorSolutionView } from "../views/mentor_solution"
 import { editorTips } from "../textual_analysis"
@@ -14,6 +15,7 @@ export class MentorController {
     if (utils.onMacintosh())
       fixEditorKeystrokes();
 
+    discussionView.useRealNames();
     editorTips();
     views.cleanupPostsTimestamps()
     views.renameLeaveButton()
