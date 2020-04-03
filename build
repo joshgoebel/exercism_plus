@@ -23,5 +23,7 @@ pack_extension() {
 [ -f "extension.pem" ] || pack_extension
 
 # then build the .crx file
-rm -f ./extension.crx
+rm -f ./dist/extension.crx
+rollup -c
 pack_extension --pack-extension-key=./extension.pem
+mv extension.crx dist

@@ -1,3 +1,6 @@
 extension.pem
 exercism_plus.zip
 /node_modules
+
+# build products
+extension/runtime.js

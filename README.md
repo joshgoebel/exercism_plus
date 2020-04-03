@@ -55,9 +55,19 @@ Javascript rather than regular expression, for more flexibility.
 
 ## Getting the Extension
 
-- Fetch the whole repository from Git and load the unpacked extension in Developer mode (best if you are planning on contributing)
+- Fetch the whole repository from Git and load the unpacked extension in Developer mode (best if you are planning on contributing) [you'll need to `./build` at least once]
 - Download and install the [extension.crx](https://github.com/yyyc514/exercism_plus/raw/master/extension.crx) file from the GitHub repository
 - Install the extension directly from the [Chrome Web Store](https://chrome.google.com/webstore/detail/exercism-plus/mpbkfakldcnnihdkfkhkpfijjaoglcah)
+
+## Building from source
+
+```
+npm install
+npm install -g rollup
+./build
+```
+
+The extension files will be in `extension` and a distributable `.crx` will be in `dist`.
 
 ## Contributing
 
