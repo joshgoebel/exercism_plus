@@ -380,3 +380,20 @@ margin-bottom: 13px;
     color:#c00 !important;
     text-decoration: underline !important;
 }
+
+body.doublewide .lo-container {
+    max-width: none !important
+}
+
+/* override our own rule */
+body.doublewide .tools-bar {
+    max-width: none !important
+}
+
+body.doublewide .lhs {
+    width:60% !important
+}
+
+body.doublewide .rhs {
+    width:40% !important
+}

@@ -15,11 +15,14 @@ const keybindings = () => {
     if (event.target.tagName=="INPUT") return;
     if (event.target.tagName=="TEXTAREA") return;
 
-    if (event.key=="n") {
+    if (event.key==="n") {
       utils.redirect("/mentor/dashboard/next_solutions")
     }
-    if (event.key==";") {
+    if (event.key===";") {
       utils.redirect("/my/notifications")
+    }
+    if (event.key==="w") {
+      document.body.classList.toggle("doublewide")
     }
     // console.log(ev)
   })

@@ -17,11 +17,13 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 ### Subtle usability improvements
 
 - Solutions become sticky when scrolling a long discussion - so that you can always see the source (provided it fits in your browsers vertical space)
+- Added double-wide viewing mode that removes `max-width` and set up a 60/40 split view
 
 ### Keybindings
 
 - `n` Queue (Next solutions)
 - `;` Notifications
+- `w` Toggle double-wide viewing mode for solutions
 - - Adds &#8984;B and &#8984;I keybindings for Bold and Italic to the editor on Macs
 
 ### Inline Student Profiles
