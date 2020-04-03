@@ -1,3 +1,27 @@
 #!/bin/sh
-rm extension.crx
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --pack-extension=./extension/ --pack-extension-key=./extension.pem
+
+case "$(uname -o)" in
+    Darwin)
+        CHROME_EXE="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        ;;
+    *)
+        echo "Only MacOS, so far" >&2
+        exit 1
+        ;;
+esac
+
+pack_extension() {
+    "$CHROME_EXE" --pack-extension=./extension/ "$@"
+    rc=$?
+    if [ "$rc" -ne 0 ]; then
+        echo "Hmm, non-zero exit from chrome"
+        exit "$rc"
+    fi
+}
+
+# create the .pem file if it doesn't exist
+[ -f "extension.pem" ] || pack_extension
+
+# then build the .crx file
+rm -f ./extension.crx
+pack_extension --pack-extension-key=./extension.pem
