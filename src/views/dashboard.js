@@ -19,13 +19,16 @@ export const collapseCoreExercises = () => {
 
 export const cleanupSolutionList = () => {
     document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
-        el.innerHTML = el.innerHTML.replace(/for mentoring|about/g,"")
+        el.innerHTML = el.innerHTML.replace(/Submitted|for mentoring|about/g,"")
+    })
+    document.querySelectorAll(".solution .details .extra .iteration").forEach((el) => {
+        el.innerHTML = el.innerHTML.replace(/#/g,"")
     })
     document.querySelectorAll(".solution .details .iteration").forEach((el) => {
         let handle = el.parentNode.parentNode.querySelector(".title .handle")
         handle.remove()
         let user = handle.innerHTML.replace("'s","")
-        el.innerHTML = `${el.innerHTML} by ${user}`
+        el.innerHTML = `${el.innerHTML} <span>by</span> ${user}`
     })
   }
 

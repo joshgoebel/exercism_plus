@@ -95,6 +95,7 @@ div.header .h1-subtitle {
 .solution .icons .person {
     border-radius: 25px !important;
     border:0 !important;
+    margin-left:10px;
     box-shadow: 0px 0px 5px var(--image-shadow);
 }
 
@@ -121,6 +122,9 @@ div.header .h1-subtitle {
 /* extraneous */
 #mentor-next-solutions-page .solution .extra .language {
     display: none !important;
+}
+#mentor-next-solutions-page .solution .extra .iteration span {
+    /* color: var(--grey-500); */
 }
 #mentor-next-solutions-page .solution .extra .iteration {
     /* display: none !important; */
