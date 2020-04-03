@@ -1,4 +1,4 @@
-import { getEditor } from "./editor"
+import { getEditor } from "../editor"
 export const fixEditorKeystrokes = () => {
     if(!getEditor()) return;
 

@@ -7,9 +7,10 @@ export class DashboardController {
 
   next_solutions() {
     views.collapseCoreExercises()
+    views.cleanupSolutionList()
   }
   your_solutions() {
-
+    views.cleanupSolutionList()
   }
   testimonials() {
 
