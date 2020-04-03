@@ -2,13 +2,31 @@ body {
     /* background: black */
 }
 
+:root {
+    --grey-900: #202833;
+    --grey-800: #414b5b;
+    --grey-700: #6f7a8a;
+    --grey-600: #939fb1;
+    --grey-500: #afbecd;
+    --grey-400: #ccd4db;
+    --grey-300: #d5dde5;
+    --grey-200: #e1e7ec;
+    --grey-100: #f8f9fa;
+
+    --image-shadow: var(--grey-600);
+    --window-shadow: var(--grey-800);
+
+    --grey-bottom-border: #ddd;
+}
+
+
 #mentor-dashboard-page .solution,
 #mentor-next-solutions-page .solution,
 #mentor-testimonials-page .solution {
     margin:0 !important;
     border:0 !important;
-    background:#f7f7f7;
-    border:1px solid #eee !important;
+    background: var(--grey-100);
+    border:1px solid var(--grey-200) !important;
     /* border-width:0px 1px !important; */
     padding:28px 25px !important;
     /* border-bottom:1px solid #eee !important; */
@@ -20,7 +38,6 @@ div.header {
 }
 div.header h1 {
     font-size:24px !important;
-    /* font-weight: normal !important; */
     color: hsl(185, 100%, 97%) !important
 }
 div.header .h1-subtitle {
@@ -53,7 +70,7 @@ div.header .h1-subtitle {
 #mentor-dashboard-page .solution:nth-of-type(1),
 #mentor-next-solutions-page .solution:nth-of-type(1),
 #mentor-testimonials-page .solution:nth-of-type(1) {
-    border-top:1px solid #ccc !important;
+    border-top:1px solid var(--grey-400) !important;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -73,12 +90,12 @@ div.header .h1-subtitle {
 .solution .icons .exercise {
     border-radius: 5px !important;
     border: 1px solid #009cab99 !important;
-    box-shadow: 1px 1px 5px #bbb;
+    box-shadow: 1px 1px 5px var(--image-shadow);
 }
 .solution .icons .person {
     border-radius: 25px !important;
     border:0 !important;
-    box-shadow: 0px 0px 5px #999;
+    box-shadow: 0px 0px 5px var(--image-shadow);
 }
 
 
@@ -92,7 +109,13 @@ div.header .h1-subtitle {
 
 .solution .details .extra {
     color: #888 !important;
+    color: var(--grey-700) !important;
     font-size: 14px !important;
+}
+
+.solution .details .extra .submitted-at {
+    float:right;
+    color: var(--grey-600) !important
 }
 
 /* extraneous */
@@ -119,7 +142,7 @@ div.header .h1-subtitle {
 .solution .title div.exercise {
     font-weight:500;
     padding-right:1.5em;
-    color: #333 !important;
+    color: var(--grey-800) !important;
     order:1
 }
 
@@ -128,9 +151,6 @@ div.header .h1-subtitle {
 
 }
 
-.solution .details .extra .submitted-at {
-    float:right;
-}
 
 .button, .pure-button {
     border-radius: 20px !important;
@@ -141,7 +161,7 @@ div.header .h1-subtitle {
 .analysis-section {
     border-radius: 5px;
     border:0 !important;
-    box-shadow: 0px 0px 4px #999;
+    box-shadow: 0px 0px 4px var(--image-shadow);
     width:99%;
     margin-top:3px;
     /* border:1px solid #eee !important; */
@@ -154,7 +174,7 @@ div.header .h1-subtitle {
     border-radius: 5px 5px 0 0;
     padding:5px 10px !important;
     background: #79c9b366 !important;
-    color:#444 !important;
+    color:var(--grey-800) !important;
 }
 
 .misc-menu .dropdown .person {
@@ -197,7 +217,7 @@ header .notifications {
     background: #009cab !important;
 }
 #mentor-solution-page .tools-bar .notification {
-    color: #333 !important;
+    color: var(--grey-800) !important;
     font-weight: 500 !important;
 }
 #mentor-solution-page .tools-bar .mentoring-notes {
@@ -217,7 +237,7 @@ header .notifications {
 /* testimonials pop */
 
 .testimonial .feedback i {
-    color: #ccc !important;
+    color: var(--grey-400) !important;
     font-size:0.6em !important;
 }
 .testimonial .feedback {
@@ -234,7 +254,7 @@ header .notifications {
 /* less bold */
 #mentor-next-solutions-page .next-exercises-navigation li .label {
     font-weight: normal !important;
-    color:#444 !important;
+    color:var(--grey-800) !important;
     padding:5px 0;
     display: block;
     margin:0 !important;
@@ -291,9 +311,9 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 
 #mentor-solution-page .sidebar  h4 {
 font-weight: 400;
-color: #333;
+color: var(--grey-900);
 padding: 7px 0;
-border-bottom: 1px solid #ddd;
+border-bottom: 1px solid var(--grey-bottom-border);
 margin-bottom: 13px;
 }
 
@@ -322,12 +342,12 @@ margin-bottom: 13px;
     letter-spacing: -0.2px;
     display: inline-block;
     border-radius: 3px;
-    background: #f7f7f7;
+    background: --grey-100;
     line-height: 1.6em;
     margin-bottom:2px;
 }
 #mentor-solution-page .sidebar img {
-    box-shadow: 0px 0px 5px #666;
+    box-shadow: 0px 0px 5px var(--image-shadow);
     width:70px;
     border-radius: 100%;
     float:right;
@@ -350,18 +370,6 @@ margin-bottom: 13px;
     position: relative;
 }
 
-.floating-editor {
-    position: fixed;
-    top: 100px;
-    /* right: 150px; */
-    background: white;
-    /* padding: 10px 20px; */
-    box-shadow: 0px 0px 10px #666;
-    border: 2px solid steelblue;
-    border-radius: 5px;
-    z-index: 100;
-    width: 500px;
-}
 
 .stickySubmission {
     position: sticky;
@@ -413,8 +421,11 @@ body.doublewide .rhs {
     background: white;
     border: 2px solid #2ac59c;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px #666;
+    box-shadow: 0px 0px 10px var(--window-shadow);
     /* width: 513px; */
     z-index: 100;
 
 }
+
+
+
