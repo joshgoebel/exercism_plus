@@ -108,7 +108,8 @@ const addFooter = () => {
 // TODO: Add settings panel
 const config = {
     username: "ajoshguy",
-    realname: "Josh G."
+    realname: "Josh G.",
+    replaceMyName: true
   };
 
 const whoami = () => {
@@ -120,11 +121,14 @@ const useRealNames = () => {
     document.querySelectorAll(".post-body .user-handle").forEach((el) => {
         let role = el.parentNode.querySelector(".user-role");
         if (el.innerHTML === whoami()) {
-            el.innerHTML = config.realname;
+            if (config.replaceMyName) {
+              el.innerHTML = config.realname;
+            }
             role.remove();
         }
-        // there is only a single student it's hard to get confused about who that is
-        if (role && role.innerHTML.trim()==="Student") {
+        // there is only a single student it's hard to get confused about who that is.
+        // But don't remove the role if we're looking at someone else's review.
+        if (role && role.innerHTML.trim()==="Student" && el.innerHTML !== "[Redacted]") {
             role.remove();
         }
         if (el.innerHTML === "Automated Message") {
