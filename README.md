@@ -64,6 +64,14 @@ Javascript rather than regular expression, for more flexibility.
 Please open an issue if you have any idea for contributing.  If you mentor and have a common
 anti-pattern to share, please feel free to open a PR.
 
+### For developers
+
+```bash
+npm install -g rollup
+rollup -c -w
+```
+Then edit some code. `rollup` will refresh the ./extension directory, and you can reload the extension in your browser.
+
 ## License
 
 Exercism Plus is released under the MIT License. See [LICENSE](https://github.com/yyyc514/exercism_plus/blob/master/LICENSE) file for details.
