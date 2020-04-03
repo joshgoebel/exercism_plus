@@ -6,11 +6,21 @@ class Route {
   dispatch() {
     let [controllerName, action] = this.destination.split("#")
     controllerName = `${controllerName}Controller`
-    eval(`new ${controllerName}().${action}()`)
+    eval(`new ${controllerName}().${action}({match:this._lastMatch})`)
+    this._lastMatch = null
   }
+  // TODO: more complex matchers
   match(location) {
-    // TODO: more complex matchers
-    return location.pathname === this.matcher
+    // regex matchers
+    if (typeof this.matcher === "object") {
+      let match = location.pathname.match(this.matcher)
+      if (match) {
+        this._lastMatch = match
+        return true
+      }
+    } else {
+      return location.pathname === this.matcher
+    }
   }
 }
 

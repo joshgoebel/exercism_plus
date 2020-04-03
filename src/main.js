@@ -5,20 +5,10 @@ import { cleanerUI } from "./user_interface"
 import { config } from "./config"
 import { $ } from "./utils"
 import { editorTips } from "./textual_analysis"
+import { MentorController } from "./controllers/mentor"
 import { DashboardController } from "./controllers/dashboard"
 import { Router } from "./lib/router"
-
-
-const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/
-const NOT_PUBLIC_TEXT = "solution is not public"
-
-const redirectToMentoringURL = () => {
-  let m = window.location.href.match(PRIVATE_URL_RE)
-  if (m && document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
-    utils.redirect(`/mentor/solutions/${m[1]}`)
-  }
-}
-
+import * as commonViews from "./views/common"
 
 import { MentorSolutionView } from "./mentor_solution"
 
@@ -61,16 +51,16 @@ let app = new Proxy(() => {}, {
 } )
 
 // dashboard
-// router.get("/mentor/dashboard/next_solutions", "Dashboard#next_solutions")
-// console.log(app.Dashboard.next_solutions)
 router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions())
 router.get("/mentor/dashboard/your_solutions","")
 router.get("/mentor/dashboard/testimonials","")
 
-import * as commonViews from "./views/common"
+// solutions
+router.get(/^\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution_not_public())
+
+
 
 const boot = async () => {
-  redirectToMentoringURL();
   cleanerUI();
 
 

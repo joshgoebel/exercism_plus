@@ -148,6 +148,18 @@ const TIPS = [
     });
   };
 
+const NOT_PUBLIC_TEXT = "solution is not public";
+
+class MentorController {
+  constructor() {
+  }
+  solution_not_public({match}) {
+    if (document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
+      redirect(`/mentor/solutions/${match.groups.id}`);
+    }
+  }
+}
+
 const renameDashboardTabs = () => {
     let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]');
     let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]');
@@ -191,11 +203,21 @@ class Route {
   dispatch() {
     let [controllerName, action] = this.destination.split("#");
     controllerName = `${controllerName}Controller`;
-    eval(`new ${controllerName}().${action}()`);
+    eval(`new ${controllerName}().${action}({match:this._lastMatch})`);
+    this._lastMatch = null;
   }
+  // TODO: more complex matchers
   match(location) {
-    // TODO: more complex matchers
-    return location.pathname === this.matcher
+    // regex matchers
+    if (typeof this.matcher === "object") {
+      let match = location.pathname.match(this.matcher);
+      if (match) {
+        this._lastMatch = match;
+        return true
+      }
+    } else {
+      return location.pathname === this.matcher
+    }
   }
 }
 
@@ -213,6 +235,41 @@ class Router {
   }
 
 }
+
+const cleanupBreadcrumbs = () => {
+    let breadcrumbs = document.querySelector("nav.breadcrumb");
+    if (!breadcrumbs) return;
+
+    let links = breadcrumbs.querySelectorAll("a");
+    // ugh, what's the point of a single breadcrumb that points to our current page?
+    if (links.length === 1) {
+        breadcrumbs.remove();
+    }
+};
+
+const addNewSolutionsMenuLink = () => {
+    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
+    dashboard.insertAdjacentElement('afterend',
+        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+};
+
+
+
+const LEGAL = `
+<div class="legal">
+Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
+devoted to helping improve your Exercism experience, and supported by
+<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
+</div>
+`;
+
+const addFooter = () => {
+    let legal = document.querySelector("footer .legal");
+    if (!legal) return;
+
+    legal.insertAdjacentElement('beforebegin',$(LEGAL));
+    legal.style.marginTop=0;
+};
 
 /* higher level HTTP abstractions */
 
@@ -348,51 +405,6 @@ class MentorSolutionView {
   }
 }
 
-const cleanupBreadcrumbs = () => {
-    let breadcrumbs = document.querySelector("nav.breadcrumb");
-    if (!breadcrumbs) return;
-
-    let links = breadcrumbs.querySelectorAll("a");
-    // ugh, what's the point of a single breadcrumb that points to our current page?
-    if (links.length === 1) {
-        breadcrumbs.remove();
-    }
-};
-
-const addNewSolutionsMenuLink = () => {
-    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
-    dashboard.insertAdjacentElement('afterend',
-        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
-};
-
-
-
-const LEGAL = `
-<div class="legal">
-Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
-devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
-</div>
-`;
-
-const addFooter = () => {
-    let legal = document.querySelector("footer .legal");
-    if (!legal) return;
-
-    legal.insertAdjacentElement('beforebegin',$(LEGAL));
-    legal.style.marginTop=0;
-};
-
-const PRIVATE_URL_RE = /exercism\.io\/solutions\/([a-z0-9]+$)/;
-const NOT_PUBLIC_TEXT = "solution is not public";
-
-const redirectToMentoringURL = () => {
-  let m = window.location.href.match(PRIVATE_URL_RE);
-  if (m && document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
-    redirect(`/mentor/solutions/${m[1]}`);
-  }
-};
-
 const keybindings = () => {
   // todo abstract way more later
   document.addEventListener("keyup", (event) => {
@@ -432,14 +444,16 @@ let app = new Proxy(() => {}, {
 } );
 
 // dashboard
-// router.get("/mentor/dashboard/next_solutions", "Dashboard#next_solutions")
-// console.log(app.Dashboard.next_solutions)
 router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions());
 router.get("/mentor/dashboard/your_solutions","");
 router.get("/mentor/dashboard/testimonials","");
 
+// solutions
+router.get(/^\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution_not_public());
+
+
+
 const boot = async () => {
-  redirectToMentoringURL();
   cleanerUI();
 
 
