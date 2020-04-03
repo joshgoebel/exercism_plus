@@ -1,6 +1,7 @@
 import * as utils from "./utils"
 import { Router } from "./lib/router"
 import * as commonViews from "./views/common"
+import * as discussion from "./views/discussion"
 
 // controllers
 import { MentorController } from "./controllers/mentor"
@@ -23,6 +24,9 @@ const keybindings = () => {
     }
     if (event.key==="w") {
       document.body.classList.toggle("doublewide")
+    }
+    if (event.key==="/") {
+      discussion.togglePopoutEditor();
     }
     // console.log(ev)
   })

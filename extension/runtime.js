@@ -105,16 +105,6 @@ const addFooter = () => {
     legal.style.marginTop=0;
 };
 
-const cleanupPostsTimestamps = () => {
-    document.querySelectorAll(".post-body .created-at").forEach((el) => {
-        el.innerHTML = el.innerHTML.replace(/posted|about/g,"");
-    });
-};
-const renameLeaveButton = () => {
-    if (document.querySelector("a.leave-button"))
-        document.querySelector("a.leave-button").innerHTML="Leave Discussion";
-};
-
 // TODO: Add settings panel
 const config = {
     username: "ajoshguy",
@@ -141,6 +131,38 @@ const useRealNames = () => {
             el.innerHTML = "Exercism";
         }
     });
+};
+
+const addPopoutToggleButton = () => {
+    let tabs = document.querySelector(".new-editable-text .tabs");
+    let btn = $(`<i title="Pop-out editor" aria-hidden="true" class="pop far fa-window-restore"></i>`);
+    tabs.insertAdjacentElement("beforeend",btn);
+    btn.addEventListener("click",(ev) => {
+        togglePopoutEditor();
+    });
+
+};
+
+const togglePopoutEditor = () => {
+    let editor = document.querySelector(".new-editable-text");
+    let rhs = document.querySelector(".rhs .discussion");
+
+    editor.classList.toggle("popout");
+    if (editor.classList.contains("popout")) {
+        editor.style.width = `${rhs.clientWidth}px`;
+    } else {
+        editor.style.width = null;
+    }
+};
+
+const cleanupPostsTimestamps = () => {
+    document.querySelectorAll(".post-body .created-at").forEach((el) => {
+        el.innerHTML = el.innerHTML.replace(/posted|about/g,"");
+    });
+};
+const renameLeaveButton = () => {
+    if (document.querySelector("a.leave-button"))
+        document.querySelector("a.leave-button").innerHTML="Leave Discussion";
 };
 
 const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
@@ -270,7 +292,7 @@ class MentorSolutionView {
   async render() {
 
     this.stickyLeftSide();
-
+    addPopoutToggleButton();
 
     let profileLink = document.querySelector("#mentor-solution-page .track-header .byline a");
     if (!profileLink) return;
@@ -447,6 +469,9 @@ const keybindings = () => {
     }
     if (event.key==="w") {
       document.body.classList.toggle("doublewide");
+    }
+    if (event.key==="/") {
+      togglePopoutEditor();
     }
     // console.log(ev)
   });

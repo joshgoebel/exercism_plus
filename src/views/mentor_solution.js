@@ -1,5 +1,6 @@
 import { $ } from "../utils"
 import { Users } from "../db/users"
+import * as discussionView from  "./discussion"
 
 export class MentorSolutionView {
   stickyLeftSide() {
@@ -25,7 +26,7 @@ export class MentorSolutionView {
   async render() {
 
     this.stickyLeftSide();
-
+    discussionView.addPopoutToggleButton();
 
     let profileLink = document.querySelector("#mentor-solution-page .track-header .byline a")
     if (!profileLink) return;
