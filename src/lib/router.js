@@ -36,5 +36,22 @@ export class Router {
   get(url, routeTo) {
     this.table.push(new Route(url, routeTo))
   }
-
+  static get app() {
+    return new Proxy(() => {}, {
+      apply: function(obj) {
+        return `${obj.controller}#${obj.action}`
+      },
+      get: function(obj, prop,receiver) {
+        if (prop[0] === prop[0].toUpperCase()) {
+          obj.controller = `${prop}`
+        } else {
+          obj.action = prop
+          // return `${obj.controller}#${obj.action}`
+        }
+        // console.log(`${obj.controller}#${obj.action}`)
+        // console.log(receiver)
+        return receiver
+      }
+    } )
+  }
 }

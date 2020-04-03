@@ -2,27 +2,6 @@
 
 const getEditor = () => document.querySelector('textarea.md-input[name="discussion_post[content]"]');
 
-const fixEditorKeystrokes = () => {
-    if(!getEditor()) return;
-
-    let editors = document.querySelectorAll('textarea[name="discussion_post[content]"]');
-
-    editors.forEach((editor) => {
-      editor.addEventListener("keydown", (event) => {
-        let click = new MouseEvent('click', { bubbles: true});
-        if (event.metaKey && event.key=="b") {
-          let boldButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+B"]');
-          boldButton.dispatchEvent(click);
-        }
-        if (event.metaKey && event.key=="i") {
-          let italicButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+I"]');
-          italicButton.dispatchEvent(click);
-        }
-      });
-    });
-
-  };
-
 const onMacintosh = () => {
   return /Macintosh/.test(navigator.userAgent)
 };
@@ -42,33 +21,9 @@ const config = {
   };
 
 const cleanerUI = () => {
-    cleanupSolutionList();
-    cleanupPostsList();
     useRealName();
-    if (document.querySelector("a.leave-button"))
-        document.querySelector("a.leave-button").innerHTML="Leave";
   };
 
-
-
-
-const cleanupSolutionList = () => {
-  document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
-      el.innerHTML = el.innerHTML.replace(/for mentoring|about/g,"");
-  });
-  document.querySelectorAll(".solution .details .iteration").forEach((el) => {
-      let handle = el.parentNode.parentNode.querySelector(".title .handle");
-      handle.remove();
-      let user = handle.innerHTML.replace("'s","");
-      el.innerHTML = `${el.innerHTML} by ${user}`;
-  });
-};
-
-const cleanupPostsList = () => {
-document.querySelectorAll(".post-body .created-at").forEach((el) => {
-    el.innerHTML = el.innerHTML.replace(/posted|about/g,"");
-});
-};
 
 const useRealName = () => {
 document.querySelectorAll(".post-body .user-handle").forEach((el) => {
@@ -148,128 +103,36 @@ const TIPS = [
     });
   };
 
-const NOT_PUBLIC_TEXT = "solution is not public";
-
-class MentorController {
-  constructor() {
-  }
-  solution_not_public({match}) {
-    if (document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
-      redirect(`/mentor/solutions/${match.groups.id}`);
-    }
-  }
-}
-
-const renameDashboardTabs = () => {
-    let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]');
-    let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]');
-    if (!waiting) return;
-
-    queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
-        "Queue $1");
-    waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
-        "Mentoring $1");
-};
-
-const collapseCoreExercises = () => {
-    document.querySelectorAll("ul.exercises li a.label").forEach(el => {
-        if (el.innerHTML.includes("· 0"))
-        el.parentNode.removeChild(el);
-        el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
+const cleanupPostsTimestamps = () => {
+    document.querySelectorAll(".post-body .created-at").forEach((el) => {
+        el.innerHTML = el.innerHTML.replace(/posted|about/g,"");
     });
 };
-
-class DashboardController {
-  constructor() {
-    renameDashboardTabs();
-  }
-
-  next_solutions() {
-    collapseCoreExercises();
-  }
-  your_solutions() {
-
-  }
-  testimonials() {
-
-  }
-}
-
-class Route {
-  constructor(url, routeTo) {
-    this.matcher = url;
-    this.destination = routeTo;
-  }
-  dispatch() {
-    let [controllerName, action] = this.destination.split("#");
-    controllerName = `${controllerName}Controller`;
-    eval(`new ${controllerName}().${action}({match:this._lastMatch})`);
-    this._lastMatch = null;
-  }
-  // TODO: more complex matchers
-  match(location) {
-    // regex matchers
-    if (typeof this.matcher === "object") {
-      let match = location.pathname.match(this.matcher);
-      if (match) {
-        this._lastMatch = match;
-        return true
-      }
-    } else {
-      return location.pathname === this.matcher
-    }
-  }
-}
-
-class Router {
-  constructor() {
-    this.table = [];
-  }
-  go(location) {
-    let route = this.table.find((route) => route.match(location));
-    if (route)
-      route.dispatch();
-  }
-  get(url, routeTo) {
-    this.table.push(new Route(url, routeTo));
-  }
-
-}
-
-const cleanupBreadcrumbs = () => {
-    let breadcrumbs = document.querySelector("nav.breadcrumb");
-    if (!breadcrumbs) return;
-
-    let links = breadcrumbs.querySelectorAll("a");
-    // ugh, what's the point of a single breadcrumb that points to our current page?
-    if (links.length === 1) {
-        breadcrumbs.remove();
-    }
+const renameLeaveButton = () => {
+    if (document.querySelector("a.leave-button"))
+        document.querySelector("a.leave-button").innerHTML="Leave Discussion";
 };
 
-const addNewSolutionsMenuLink = () => {
-    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
-    dashboard.insertAdjacentElement('afterend',
-        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
-};
+const fixEditorKeystrokes = () => {
+    if(!getEditor()) return;
 
+    let editors = document.querySelectorAll('textarea[name="discussion_post[content]"]');
 
+    editors.forEach((editor) => {
+      editor.addEventListener("keydown", (event) => {
+        let click = new MouseEvent('click', { bubbles: true});
+        if (event.metaKey && event.key=="b") {
+          let boldButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+B"]');
+          boldButton.dispatchEvent(click);
+        }
+        if (event.metaKey && event.key=="i") {
+          let italicButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+I"]');
+          italicButton.dispatchEvent(click);
+        }
+      });
+    });
 
-const LEGAL = `
-<div class="legal">
-Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
-devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
-</div>
-`;
-
-const addFooter = () => {
-    let legal = document.querySelector("footer .legal");
-    if (!legal) return;
-
-    legal.insertAdjacentElement('beforebegin',$(LEGAL));
-    legal.style.marginTop=0;
-};
+  };
 
 /* higher level HTTP abstractions */
 
@@ -405,6 +268,168 @@ class MentorSolutionView {
   }
 }
 
+const NOT_PUBLIC_TEXT = "solution is not public";
+
+class MentorController {
+  constructor() {
+  }
+  solution({match}) {
+    if (onMacintosh())
+      fixEditorKeystrokes();
+
+    editorTips();
+    cleanupPostsTimestamps();
+    renameLeaveButton();
+    new MentorSolutionView().render();
+  }
+  solution_not_public({match}) {
+    if (document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
+      redirect(`/mentor/solutions/${match.groups.id}`);
+    }
+  }
+}
+
+const renameDashboardTabs = () => {
+    let waiting = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]');
+    let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]');
+    if (!waiting) return;
+
+    queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
+        "Queue $1");
+    waiting.innerHTML = waiting.innerHTML.replace(/.*(\(\d+\))/,
+        "Mentoring $1");
+};
+
+const collapseCoreExercises = () => {
+    document.querySelectorAll("ul.exercises li a.label").forEach(el => {
+        if (el.innerHTML.includes("· 0"))
+        el.parentNode.removeChild(el);
+        el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
+    });
+};
+
+const cleanupSolutionList = () => {
+    document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
+        el.innerHTML = el.innerHTML.replace(/for mentoring|about/g,"");
+    });
+    document.querySelectorAll(".solution .details .iteration").forEach((el) => {
+        let handle = el.parentNode.parentNode.querySelector(".title .handle");
+        handle.remove();
+        let user = handle.innerHTML.replace("'s","");
+        el.innerHTML = `${el.innerHTML} by ${user}`;
+    });
+  };
+
+class DashboardController {
+  constructor() {
+    renameDashboardTabs();
+  }
+
+  next_solutions() {
+    collapseCoreExercises();
+    cleanupSolutionList();
+  }
+  your_solutions() {
+    cleanupSolutionList();
+  }
+  testimonials() {
+
+  }
+}
+
+class Route {
+  constructor(url, routeTo) {
+    this.matcher = url;
+    this.destination = routeTo;
+  }
+  dispatch() {
+    let [controllerName, action] = this.destination.split("#");
+    controllerName = `${controllerName}Controller`;
+    eval(`new ${controllerName}().${action}({match:this._lastMatch})`);
+    this._lastMatch = null;
+  }
+  // TODO: more complex matchers
+  match(location) {
+    // regex matchers
+    if (typeof this.matcher === "object") {
+      let match = location.pathname.match(this.matcher);
+      if (match) {
+        this._lastMatch = match;
+        return true
+      }
+    } else {
+      return location.pathname === this.matcher
+    }
+  }
+}
+
+class Router {
+  constructor() {
+    this.table = [];
+  }
+  go(location) {
+    let route = this.table.find((route) => route.match(location));
+    if (route)
+      route.dispatch();
+  }
+  get(url, routeTo) {
+    this.table.push(new Route(url, routeTo));
+  }
+  static get app() {
+    return new Proxy(() => {}, {
+      apply: function(obj) {
+        return `${obj.controller}#${obj.action}`
+      },
+      get: function(obj, prop,receiver) {
+        if (prop[0] === prop[0].toUpperCase()) {
+          obj.controller = `${prop}`;
+        } else {
+          obj.action = prop;
+          // return `${obj.controller}#${obj.action}`
+        }
+        // console.log(`${obj.controller}#${obj.action}`)
+        // console.log(receiver)
+        return receiver
+      }
+    } )
+  }
+}
+
+const cleanupBreadcrumbs = () => {
+    let breadcrumbs = document.querySelector("nav.breadcrumb");
+    if (!breadcrumbs) return;
+
+    let links = breadcrumbs.querySelectorAll("a");
+    // ugh, what's the point of a single breadcrumb that points to our current page?
+    if (links.length === 1) {
+        breadcrumbs.remove();
+    }
+};
+
+const addNewSolutionsMenuLink = () => {
+    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]');
+    dashboard.insertAdjacentElement('afterend',
+        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"));
+};
+
+
+
+const LEGAL = `
+<div class="legal">
+Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
+devoted to helping improve your Exercism experience, and supported by
+<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
+</div>
+`;
+
+const addFooter = () => {
+    let legal = document.querySelector("footer .legal");
+    if (!legal) return;
+
+    legal.insertAdjacentElement('beforebegin',$(LEGAL));
+    legal.style.marginTop=0;
+};
+
 const keybindings = () => {
   // todo abstract way more later
   document.addEventListener("keyup", (event) => {
@@ -425,45 +450,21 @@ const keybindings = () => {
 };
 
 const router = new Router();
-
-let app = new Proxy(() => {}, {
-  apply: function(obj) {
-    return `${obj.controller}#${obj.action}`
-  },
-  get: function(obj, prop,receiver) {
-    if (prop[0] === prop[0].toUpperCase()) {
-      obj.controller = `${prop}`;
-    } else {
-      obj.action = prop;
-      // return `${obj.controller}#${obj.action}`
-    }
-    // console.log(`${obj.controller}#${obj.action}`)
-    // console.log(receiver)
-    return receiver
-  }
-} );
+let app = Router.app;
 
 // dashboard
 router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions());
-router.get("/mentor/dashboard/your_solutions","");
-router.get("/mentor/dashboard/testimonials","");
+router.get("/mentor/dashboard/your_solutions",app.Dashboard.your_solutions());
+router.get("/mentor/dashboard/testimonials",app.Dashboard.testimonials());
 
 // solutions
 router.get(/^\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution_not_public());
+router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution());
 
 
 
 const boot = async () => {
   cleanerUI();
-
-
-  if (getEditor()) {
-    if (onMacintosh())
-      fixEditorKeystrokes();
-    editorTips();
-  }
-
-  new MentorSolutionView().render();
   keybindings();
 
   addNewSolutionsMenuLink();

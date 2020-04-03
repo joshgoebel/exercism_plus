@@ -1,34 +1,9 @@
 import { config } from "./config"
-import { $ } from "./utils"
 
 export const cleanerUI = () => {
-    cleanupSolutionList();
-    cleanupPostsList();
     useRealName();
-    if (document.querySelector("a.leave-button"))
-        document.querySelector("a.leave-button").innerHTML="Leave"
   }
 
-
-
-
-const cleanupSolutionList = () => {
-  document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
-      el.innerHTML = el.innerHTML.replace(/for mentoring|about/g,"")
-  })
-  document.querySelectorAll(".solution .details .iteration").forEach((el) => {
-      let handle = el.parentNode.parentNode.querySelector(".title .handle")
-      handle.remove()
-      let user = handle.innerHTML.replace("'s","")
-      el.innerHTML = `${el.innerHTML} by ${user}`
-  })
-}
-
-const cleanupPostsList = () => {
-document.querySelectorAll(".post-body .created-at").forEach((el) => {
-    el.innerHTML = el.innerHTML.replace(/posted|about/g,"")
-});
-}
 
 const useRealName = () => {
 document.querySelectorAll(".post-body .user-handle").forEach((el) => {

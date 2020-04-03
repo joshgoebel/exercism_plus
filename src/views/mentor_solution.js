@@ -1,5 +1,5 @@
-import { $ } from "./utils"
-import { Users } from "./db/users"
+import { $ } from "../utils"
+import { Users } from "../db/users"
 
 export class MentorSolutionView {
   stickyLeftSide() {
