@@ -1,6 +1,6 @@
 #!/bin/sh
 
-case "$(uname -o)" in
+case "$(uname -s)" in
     Darwin)
         CHROME_EXE="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         ;;

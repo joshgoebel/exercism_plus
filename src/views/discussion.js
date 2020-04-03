@@ -10,7 +10,7 @@ export const useRealNames = () => {
     document.querySelectorAll(".post-body .user-handle").forEach((el) => {
         let role = el.parentNode.querySelector(".user-role")
         if (el.innerHTML === whoami()) {
-            el.innerHTML = config.realname;
+            el.innerHTML = config.realname || whoami();
             role.remove();
         }
         // there is only a single student it's hard to get confused about who that is
