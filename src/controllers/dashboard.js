@@ -6,6 +6,7 @@ export class DashboardController {
   }
 
   next_solutions() {
+    // document.querySelector(".h1-subtitle").innerHTML="Solutions are are ordered algorithmically with the most important at the top."
     views.collapseCoreExercises()
     views.cleanupSolutionList()
   }
