@@ -1,19 +1,23 @@
-import { getEditor } from "../editor"
-export const fixEditorKeystrokes = () => {
-    if(!getEditor()) return;
+const click = (el) => {
+  let event = new MouseEvent('click', { bubbles: true});
+  el.dispatchEvent(event);
+}
 
+export const fixEditorKeystrokes = () => {
     let editors = document.querySelectorAll('textarea[name="discussion_post[content]"]')
 
     editors.forEach((editor) => {
+      if (editor._fixedKeystrokes) return;
+      editor._fixedKeystrokes = true
+
       editor.addEventListener("keydown", (event) => {
-        let click = new MouseEvent('click', { bubbles: true});
         if (event.metaKey && event.key=="b") {
           let boldButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+B"]')
-          boldButton.dispatchEvent(click);
+          click(boldButton);
         }
         if (event.metaKey && event.key=="i") {
           let italicButton = editor.parentNode.querySelector('button[data-hotkey="Ctrl+I"]')
-          italicButton.dispatchEvent(click);
+          click(italicButton);
         }
       })
     })

@@ -11,7 +11,7 @@ export const useRealNames = () => {
         let role = el.parentNode.querySelector(".user-role")
         if (el.innerHTML === whoami()) {
             el.innerHTML = config.realname || whoami();
-            role.remove();
+            role && role.remove();
         }
         // there is only a single student it's hard to get confused about who that is
         // But don't remove the role if we're looking at someone else's review.
