@@ -4,6 +4,9 @@
   "description": "Mentor enhancements for the great Exercism website!",
   "main": "src/main.js",
   "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "build_extension": "./build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
