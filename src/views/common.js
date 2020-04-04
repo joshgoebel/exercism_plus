@@ -23,7 +23,7 @@ const LEGAL = `
 <div class="legal">
 Exercism Plus is a <a href="https://github.com/yyyc514/exercism_plus">tiny little extension</a>,
 devoted to helping improve your Exercism experience, and supported by
-<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">2 wonderful contributors</a>.
+<a href="https://github.com/yyyc514/exercism_plus/graphs/contributors">3 wonderful contributors</a>.
 </div>
 `
 
