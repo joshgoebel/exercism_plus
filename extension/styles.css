@@ -108,6 +108,10 @@ div.header .h1-subtitle {
     margin-bottom: 0px !important;
 }
 
+#profile-page .solution .title {
+    font-size: 1.2rem !important
+}
+
 .solution .details .extra {
     color: #888 !important;
     color: var(--grey-700) !important;
