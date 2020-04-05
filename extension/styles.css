@@ -344,7 +344,14 @@ margin-bottom: 13px;
 #mentor-solution-page .sidebar {
     margin:0em 0 1.5em;
 }
-#mentor-solution-page .sidebar .member-since,
+
+#mentor-solution-page .sidebar .member-since {
+    color: var(--grey-700) !important
+}
+#mentor-solution-page .sidebar .member-since i {
+    color: var(--grey-500) !important
+}
+
 #mentor-solution-page .sidebar .helped-count,
 #mentor-solution-page .sidebar h3,
 #mentor-solution-page .sidebar a {
