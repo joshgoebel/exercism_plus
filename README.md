@@ -62,9 +62,7 @@ Javascript rather than regular expression, for more flexibility.
 ## Building from source
 
 ```
-npm install
-npm install -g rollup
-./build
+./setup
 ```
 
 The extension files will be in `extension` and a distributable `.crx` will be in `dist`.
