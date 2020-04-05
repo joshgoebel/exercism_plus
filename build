@@ -4,6 +4,9 @@ case "$(uname -s)" in
     Darwin)
         CHROME_EXE="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         ;;
+    Linux)
+        CHROME_EXE="$(which google-chrome)"
+        ;;
     *)
         echo "Only MacOS, so far" >&2
         exit 1
