@@ -346,7 +346,8 @@ margin-bottom: 13px;
 }
 
 #mentor-solution-page .sidebar .member-since {
-    color: var(--grey-700) !important
+    color: var(--grey-700) !important;
+    font-size: 12px !important;
 }
 #mentor-solution-page .sidebar .member-since i {
     color: var(--grey-500) !important
