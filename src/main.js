@@ -7,6 +7,8 @@ import * as discussion from "./views/discussion"
 import { MentorController } from "./controllers/mentor"
 import { DashboardController } from "./controllers/dashboard"
 
+import "./css/features.scss"
+import "./css/monolith.css"
 
 const keybindings = () => {
   // todo abstract way more later

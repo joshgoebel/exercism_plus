@@ -1,0 +1,56 @@
+@import "./inline_profile.scss";
+
+/***********
+sticky code
+*/
+
+.stickySubmission {
+    position: sticky;
+    top:15px;
+}
+
+/***********
+double wide
+*/
+
+body.doublewide {
+    .lo-container {
+        max-width: none !important
+    }
+
+    /* override our own rule for mentoring screen */
+    .tools-bar {
+        max-width: none !important
+    }
+
+    .lhs {
+        width:60% !important
+    }
+
+    .rhs {
+        width:40% !important
+    }
+}
+
+
+/*************
+popout editor
+*/
+
+.new-editable-text .pop {
+    float:right;
+    padding:5px;
+    cursor: pointer;
+    color:#666;
+}
+.new-editable-text.popout {
+    position: fixed;
+    top: 30px;
+    padding: 15px 30px;
+    background: var(--background);
+    border: 2px solid #2ac59c;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px var(--window-shadow);
+    /* width: 513px; */
+    z-index: 100;
+}
