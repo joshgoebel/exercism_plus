@@ -19,7 +19,7 @@ export const collapseCoreExercises = () => {
 
 export const cleanupSolutionList = () => {
     document.querySelectorAll(".solution .details .extra .submitted-at").forEach((el) => {
-        el.innerHTML = el.innerHTML.replace(/Submitted|for mentoring|about/g,"")
+        el.innerHTML = el.innerHTML.replace(/Last updated|Submitted|for mentoring|about/g,"")
     })
     document.querySelectorAll(".solution .details .extra .iteration").forEach((el) => {
         el.innerHTML = el.innerHTML

@@ -130,6 +130,9 @@
     /* display: none !important; */
     /* padding-right:0.5em; */
 }
+#mentor-dashboard-page .solution .extra .divider:nth-child(4) {
+    display: none !important;
+}
 #mentor-next-solutions-page .solution .extra .divider {
     display: none !important;
 }
