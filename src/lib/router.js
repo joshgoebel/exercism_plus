@@ -2,11 +2,16 @@ class Route {
   constructor(url, routeTo) {
     this.matcher = url
     this.destination = routeTo
+    this.compile()
   }
-  dispatch() {
+  compile() {
     let [controllerName, action] = this.destination.split("#")
     controllerName = `${controllerName}Controller`
-    eval(`new ${controllerName}().${action}({match:this._lastMatch})`)
+    this.actionName = action
+    this.newController = new Function(`return new ${controllerName}()`);
+  }
+  dispatch() {
+    this.newController()[this.actionName]({match:this._lastMatch});
     this._lastMatch = null
   }
   // TODO: more complex matchers
