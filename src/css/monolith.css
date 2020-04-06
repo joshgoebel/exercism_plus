@@ -226,6 +226,9 @@ header .notifications {
     color: var(--grey-800) !important;
     font-weight: 500 !important;
 }
+#mentor-solution-page .tools-bar .notification .ignore {
+    background-color: var(--grey-200) !important;
+}
 #mentor-solution-page .tools-bar .mentoring-notes {
     padding-right: 0 !important
 }
