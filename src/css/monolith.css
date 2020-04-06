@@ -332,32 +332,3 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
 }
 
 
-/* header and tabs */
-
-div.header {
-    background: #0098a6 !important;
-    background-image: none !important;
-}
-div.header h1 {
-    font-size:24px !important;
-    color: hsl(185, 100%, 97%) !important
-}
-div.header .h1-subtitle {
-    color:hsl(185, 64%, 82%) !important;
-    font-size: 16px !important;
-}
-.header .header-tab:not(.selected) {
-    /* background: hsla(185, 100%, 26%, 1) !important; */
-    color: hsla(185, 40%, 84%, 1) !important
-}
-.header .header-tab.selected {
-    font-weight: bold !important;
-    /* color: #009cab !important */
-
-}
-#mentor-dashboard-page .header,
-#mentor-next-solutions-page .header,
-#mentor-testimonials-page .header {
-
-    padding-top:30px !important;
-}
