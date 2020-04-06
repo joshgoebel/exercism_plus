@@ -11,8 +11,8 @@ export const renameDashboardTabs = () => {
 
 export const collapseCoreExercises = () => {
     document.querySelectorAll("ul.exercises li a.label").forEach(el => {
-        if (el.innerHTML.includes("· 0"))
-        el.parentNode.removeChild(el);
+        if (el.innerHTML.includes("· 0") && !el.classList.contains("selected"))
+            el.parentNode.removeChild(el);
         el.innerHTML= el.innerHTML.replace(/\d+\. /,"").replace(" · 0","");
     })
 }
