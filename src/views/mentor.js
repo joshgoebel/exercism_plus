@@ -8,3 +8,12 @@ export const renameLeaveButton = () => {
         document.querySelector("a.leave-button").innerHTML="Leave Discussion"
 }
 
+
+export const tweakNotificationText = () => {
+    let ignore = document.querySelector(".notification .ignore")
+    if (ignore) {
+      ignore.innerHTML = ignore.innerHTML.replace("No action is required","Nope, ignore for now.")
+      let notification = document.querySelector(".notification")
+      notification.innerHTML = notification.innerHTML.replace("requires your action.","may require a response.")
+    }
+}

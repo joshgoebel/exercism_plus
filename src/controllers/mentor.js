@@ -33,6 +33,7 @@ export class MentorController {
   }
   solution({match}) {
     editorTips();
+    views.tweakNotificationText();
     views.renameLeaveButton()
     new MentorSolutionView().render()
 

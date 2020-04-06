@@ -322,6 +322,10 @@ body #mentor-next-solutions-page .next-exercises-navigation .label.selected {
     padding-left:15px !important;
     color:#666 !important;
 }
+.notification .ignore:hover {
+    /* color:#009cab !important; */
+    text-decoration: underline !important;
+}
 .leave-button:hover {
     color:#c00 !important;
     text-decoration: underline !important;
