@@ -22,6 +22,7 @@ div.header .h1-subtitle {
 
 }
 
+
 #mentor-dashboard-page .header,
 #mentor-next-solutions-page .header,
 #mentor-testimonials-page .header {
@@ -34,8 +35,16 @@ div.header .h1-subtitle {
     h1 {
         color: var(--grey-800) !important
     }
-    .detailsx .star-button {
+    .details .star-button {
         width: auto !important;
     }
 }
 
+.tools-bar .pure-button,
+.tools-bar .notification .ignore {
+    color:var(--greenblue-700) !important;
+    &:hover {
+        color:var(--greenblue-400) !important;
+        text-decoration: underline !important;
+    }
+}
