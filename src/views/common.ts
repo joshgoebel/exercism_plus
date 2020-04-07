@@ -30,9 +30,9 @@ devoted to helping improve your Exercism experience, and supported by
 `
 
 export const addFooter = () => {
-    let legal = document.querySelector("footer .legal");
+    let legal = document.querySelector<HTMLElement>("footer .legal");
     if (!legal) return;
 
     legal.insertAdjacentElement('beforebegin',$(LEGAL));
-    (<HTMLElement>legal).style.marginTop="0px";
+    legal.style.marginTop="0px";
 }

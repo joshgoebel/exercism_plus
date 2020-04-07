@@ -2,7 +2,8 @@
   "name": "exercism_plus",
   "version": "0.4.0",
   "description": "Mentor enhancements for the great Exercism website!",
-  "main": "src/main.js",
+  "main": "./src/main.js",
+  "types": "./src/global.d.ts",
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",

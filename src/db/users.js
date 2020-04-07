@@ -5,8 +5,8 @@ const db = localStorage
 
 class User {
   constructor(data) {
-    Object.assign(this, data)
     this.profileHTML = undefined
+    Object.assign(this, data)
   }
 
   get sidebar() {

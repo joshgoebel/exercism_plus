@@ -10,8 +10,9 @@ interface EditorElement extends HTMLElement {
 }
 
 export const fixEditorKeystrokes = () => {
-    let editors : NodeListOf<EditorElement> =
-      document.querySelectorAll('textarea[name="discussion_post[content]"]')
+    // let editors : NodeListOf<EditorElement> =
+      // document.querySelectorAll('textarea[name="discussion_post[content]"]')
+    let editors = document.querySelectorAll<EditorElement>('textarea[name="discussion_post[content]"]')
 
     editors.forEach((editor) => {
       if (editor._fixedKeystrokes) return;
