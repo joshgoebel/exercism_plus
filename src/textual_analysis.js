@@ -36,6 +36,8 @@ const TIPS = [
 
   export const editorTips = () => {
     let editor = getEditor()
+    if (!editor) return;
+
     let markdownPane = document.querySelector('.pane.markdown')
     let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
     editor.closest("form").addEventListener("submit", (event) => {

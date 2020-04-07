@@ -2,7 +2,8 @@
   "name": "exercism_plus",
   "version": "0.4.0",
   "description": "Mentor enhancements for the great Exercism website!",
-  "main": "src/main.js",
+  "main": "./src/main.js",
+  "types": "./src/global.d.ts",
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
@@ -23,7 +24,11 @@
   },
   "homepage": "https://github.com/yyyc514/exercism_plus#readme",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^4.0.0",
     "rollup": "^2.3.2",
-    "rollup-plugin-scss": "^2.1.0"
+    "rollup-plugin-scss": "^2.1.0",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   }
 }

@@ -5,6 +5,7 @@ const db = localStorage
 
 class User {
   constructor(data) {
+    this.profileHTML = undefined
     Object.assign(this, data)
   }
 

@@ -1,5 +1,14 @@
+
+type URLMatcher = string | RegExp
+
 class Route {
-  constructor(url, routeTo) {
+  private matcher: URLMatcher
+  private destination: string
+  private actionName: string = ""
+  private newController: Function = (_:any) => {}
+  private _lastMatch?: RegExpMatchArray | null
+
+  constructor(url:URLMatcher, routeTo:string) {
     this.matcher = url
     this.destination = routeTo
     this.compile()
@@ -15,7 +24,7 @@ class Route {
     this._lastMatch = null
   }
   // TODO: more complex matchers
-  match(location) {
+  match(location:Location) {
     // regex matchers
     if (typeof this.matcher === "object") {
       let match = location.pathname.match(this.matcher)
@@ -29,28 +38,37 @@ class Route {
   }
 }
 
+interface RouteBuilder {
+  controller?: string
+  action?: string
+  readonly name: string
+}
+
 export class Router {
+  private table: Route[]
   constructor() {
     this.table = []
   }
-  go(location) {
+  go(location:Location) {
     let route = this.table.find((route) => route.match(location))
     if (route)
       route.dispatch()
   }
-  get(url, routeTo) {
+  get(url:URLMatcher, routeTo:string) {
     this.table.push(new Route(url, routeTo))
   }
   static get app() {
     return new Proxy(() => {}, {
-      apply: function(obj) {
+      apply: function(obj : RouteBuilder) {
         return `${obj.controller}#${obj.action}`
       },
-      get: function(obj, prop,receiver) {
+      get: function(obj : RouteBuilder, prop, receiver) {
+        if (typeof prop !== "string") return;
+
         if (prop[0] === prop[0].toUpperCase()) {
-          obj.controller = `${prop}`
+          obj.controller = String(prop)
         } else {
-          obj.action = prop
+          obj.action = String(prop)
           // return `${obj.controller}#${obj.action}`
         }
         // console.log(`${obj.controller}#${obj.action}`)

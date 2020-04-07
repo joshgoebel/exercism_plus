@@ -1,0 +1,50 @@
+/* dropdown on queue page */
+
+#mentor-next-solutions-page {
+    select#next_track_id {
+        display: block !important;
+        -webkit-appearance: none !important;
+        padding:10px 15px !important;
+        width:100% !important;
+        background: var(--grey-100);
+        border-color: var(--grey-500);
+    }
+
+    .widget-filter.track_id .selectize-control,
+    div.track_id .selectize-control {
+        // height:0px !important;
+        display: none !important;
+    }
+
+    div.track_id { position: relative;}
+    // div.track_id::before
+    // {
+    //     // content: "Track";
+    //     position: absolute;
+    //     top:8px;
+    //     right:50px;
+    //     font-size: 10px;
+    //     color: var(--grey-600);
+    //     width: auto;;
+    //     background: transparent !important;
+    // }
+    div.track_id::after {
+        font-family: "Font Awesome 5 Pro";
+        content: '\f107';
+        font-size: 20px;
+        position: absolute;
+        font-weight: 300;
+        top: 10px;
+        right: 20px;
+        color: #434B67;
+        color: var(--grey-700);
+        pointer-events: none;
+    }
+
+    .widget-filter.track_id { width: 75%; }
+    .widget-filter.track_id .title {
+        width: auto;;
+        background: transparent !important;
+        display: none !important
+    }
+}

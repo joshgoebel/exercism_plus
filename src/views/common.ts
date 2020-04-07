@@ -13,6 +13,8 @@ export const cleanupBreadcrumbs = () => {
 
 export const addNewSolutionsMenuLink = () => {
     let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
+    if (!dashboard) return;
+
     dashboard.insertAdjacentElement('afterend',
         $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"))
 }
@@ -28,9 +30,9 @@ devoted to helping improve your Exercism experience, and supported by
 `
 
 export const addFooter = () => {
-    let legal = document.querySelector("footer .legal")
+    let legal = document.querySelector<HTMLElement>("footer .legal");
     if (!legal) return;
 
-    legal.insertAdjacentElement('beforebegin',$(LEGAL))
-    legal.style.marginTop=0;
+    legal.insertAdjacentElement('beforebegin',$(LEGAL));
+    legal.style.marginTop="0px";
 }

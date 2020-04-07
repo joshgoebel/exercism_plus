@@ -4,17 +4,26 @@ import * as discussionView from "../views/discussion"
 import { fixEditorKeystrokes } from "../fixups/bold_and_italic"
 import { MentorSolutionView } from "../views/mentor_solution"
 import { editorTips } from "../textual_analysis"
-
+import { BaseController } from "./base_controller"
 
 const NOT_PUBLIC_TEXT = "solution is not public"
 
-const newCommentsPosted = (event) => {
+const removeNotification = () => {
+  let notification = document.querySelector(".tools-bar .notification")
+  if (notification) notification.remove()
+}
+
+const newCommentsPosted = (event? : Event | null) => {
   console.log(event)
 
   views.cleanupPostsTimestamps()
   discussionView.useRealNames();
   if (utils.onMacintosh())
     fixEditorKeystrokes();
+
+  // posting counts as responding to the notification
+  if (event)
+    removeNotification();
 
   hookForms();
 }
@@ -28,10 +37,12 @@ const hookForms = () => {
   });
 }
 
-export class MentorController {
+
+export class MentorController extends BaseController {
   constructor() {
+    super()
   }
-  solution({match}) {
+  solution(req: ActionRequest) {
     editorTips();
     views.tweakNotificationText();
     views.renameLeaveButton()
@@ -48,9 +59,9 @@ export class MentorController {
     // document.body.addEventListener("ajax:success", (event) => {
   }
 
-  solution_not_public({match}) {
+  solution_not_public({match }: ActionRequest) {
     if (document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
-      utils.redirect(`/mentor/solutions/${match.groups.id}`)
+      utils.redirect(`/mentor/solutions/${match.groups!.id}`)
     }
   }
 }
