@@ -8,6 +8,11 @@ import { editorTips } from "../textual_analysis"
 
 const NOT_PUBLIC_TEXT = "solution is not public"
 
+const removeNotification = () => {
+  let notification = document.querySelector(".tools-bar .notification")
+  if (notification) notification.remove()
+}
+
 const newCommentsPosted = (event) => {
   console.log(event)
 
@@ -15,6 +20,10 @@ const newCommentsPosted = (event) => {
   discussionView.useRealNames();
   if (utils.onMacintosh())
     fixEditorKeystrokes();
+
+  // posting counts as responding to the notification
+  if (event)
+    removeNotification();
 
   hookForms();
 }

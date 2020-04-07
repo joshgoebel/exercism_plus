@@ -6,6 +6,8 @@ import * as discussion from "./views/discussion"
 // controllers
 import { MentorController } from "./controllers/mentor"
 import { DashboardController } from "./controllers/dashboard"
+import "./controllers/mentor"
+import "./controllers/dashboard"
 
 import "./css/features.scss"
 import "./css/monolith.css"
@@ -15,8 +17,9 @@ const keybindings = () => {
   document.addEventListener("keyup", (event) => {
     if (event.metaKey || event.ctrlKey || event.altKey) return;
 
-    if (event.target.tagName=="INPUT") return;
-    if (event.target.tagName=="TEXTAREA") return;
+    let element = event.target as HTMLElement;
+    if (element.tagName=="INPUT") return;
+    if (element.tagName=="TEXTAREA") return;
 
     if (event.key==="n") {
       utils.redirect("/mentor/dashboard/next_solutions")
@@ -36,7 +39,7 @@ const keybindings = () => {
 }
 
 const router = new Router();
-let app = Router.app
+let app = Router.app as any
 
 // dashboard
 router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions())
@@ -49,7 +52,7 @@ router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution())
 
 
 
-const boot = async () => {
+const boot = () => {
   keybindings();
 
   commonViews.addNewSolutionsMenuLink();
