@@ -41,10 +41,20 @@ div.header .h1-subtitle {
 }
 
 .tools-bar .pure-button,
-.tools-bar .notification .ignore {
+{
     color:var(--greenblue-700) !important;
     &:hover {
-        color:var(--greenblue-400) !important;
-        text-decoration: underline !important;
     }
+}
+.tools-bar .mentoring-notes:hover {
+    color:var(--greenblue-400) !important;
+    text-decoration: underline !important;
+}
+
+.tools-bar .notification .ignore {
+    padding:2px 15px !important;
+    margin:3px 0;
+    margin-left:20px !important;
+    border:1px solid var(--greenblue-400);
+    font-size:12px;
 }
