@@ -8,9 +8,9 @@ const whoami = () => {
 
 export const useRealNames = () => {
     document.querySelectorAll(".post-body .user-handle").forEach((el) => {
-        let role = el.parentNode.querySelector(".user-role")
+        let role = el.parentNode!.querySelector(".user-role")
         if (el.innerHTML === whoami()) {
-            el.innerHTML = config.realname || whoami();
+            el.innerHTML = config.realname || whoami() || "";
             role && role.remove();
         }
         // there is only a single student it's hard to get confused about who that is
@@ -26,6 +26,8 @@ export const useRealNames = () => {
 
 export const addPopoutToggleButton = () => {
     let tabs = document.querySelector(".new-editable-text .tabs")
+    if (!tabs) return;
+
     let btn = $(`<i title="Pop-out editor" aria-hidden="true" class="pop far fa-window-restore"></i>`)
     tabs.insertAdjacentElement("beforeend",btn)
     btn.addEventListener("click",(ev) => {
@@ -35,13 +37,14 @@ export const addPopoutToggleButton = () => {
 }
 
 export const togglePopoutEditor = () => {
-    let editor = document.querySelector(".new-editable-text")
-    let rhs = document.querySelector(".rhs .discussion")
+    let editor = document.querySelector<HTMLElement>(".new-editable-text")
+    if (!editor) return;
 
+    let rhs = document.querySelector(".rhs .discussion")!
     editor.classList.toggle("popout")
     if (editor.classList.contains("popout")) {
         editor.style.width = `${rhs.clientWidth}px`
     } else {
-        editor.style.width = null
+        editor.style.width = ""
     }
 }

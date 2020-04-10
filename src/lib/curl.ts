@@ -1,6 +1,6 @@
 /* higher level HTTP abstractions */
 
-export const get = async (url, opts = {}) => {
+export const get = async (url:string, opts = {}) => {
   try {
     console.time(`REQ: ${url}`)
     let resp = await fetch(url, opts)
@@ -17,7 +17,9 @@ export const get = async (url, opts = {}) => {
 }
 
 // move to utility?
-export const trimBody = (html) => {
+export const trimBody = (html:string | null) => {
+  if(!html) return "";
+
   let start = html.indexOf("<body")
   html = html.slice(start)
   let end = html.indexOf("</body>")

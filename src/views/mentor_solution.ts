@@ -4,16 +4,13 @@ import * as discussionView from  "./discussion"
 
 export class MentorSolutionView {
   stickyLeftSide() {
-    let panes = document.querySelector("#mentor-solution-page .lhs .tabs-and-panes")
+    const panes = document.querySelector<HTMLElement>("#mentor-solution-page .lhs .tabs-and-panes")
+    if (!panes) return;
 
     const doSticky = () => {
-      let windowHeight = window.innerHeight
-      let height = panes.offsetHeight
-      if (windowHeight > height) {
-        panes.classList.add("stickySubmission")
-      } else {
-        panes.classList.remove("stickySubmission")
-      }
+      const windowHeight = window.innerHeight
+      const height = panes.offsetHeight
+      panes.classList.toggle("stickySubmission", windowHeight > height);
       // HACK: because of bug in Exercism tabs.js implementation
       panes.className = panes.className.replace(/^(.*)\b(selected-\d)\b(.*)$/,"$1 $3 $2")
     }
@@ -34,21 +31,23 @@ export class MentorSolutionView {
     let userid = profileLink.innerHTML
     let user = await Users.get(userid)
     Users.persist(user)
-    let sidebar = user.sidebar
+    // TODO: remove the ! here
+    let sidebar = user!.sidebar
+    if (!sidebar) return;
 
     if (sidebar.querySelector(".badge.mentor")) {
-      sidebar.querySelector(".name").classList.add("mentor")
+      sidebar.querySelector(".name")!.classList.add("mentor")
     }
     sidebar.querySelectorAll(".badge").forEach((badge) =>
       badge.innerHTML = badge.innerHTML.replace("mentor",""))
 
     // if discussion is immediately under rhs then there is an ongoing visible discussion
     // otherwise this might not be claimed yet
-    let discussion = document.querySelector(".rhs > .discussion") || document.querySelector(".claimed-section")
+    let discussion = (document.querySelector(".rhs > .discussion") || document.querySelector(".claimed-section"))!
     console.log(discussion)
     discussion.insertAdjacentElement("beforebegin", sidebar)
     if (discussion.classList.contains("discussion")) {
-      discussion.querySelector("h3").innerHTML="Discussion"
+      discussion.querySelector("h3")!.innerHTML="Discussion"
       sidebar.insertAdjacentElement("afterbegin",$("<h4>Who you're mentoring</h4>"))
     } else {
       sidebar.insertAdjacentElement("afterbegin",$("<h4>Who you'll be mentoring</h4>"))
