@@ -63,7 +63,10 @@ const boot = () => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log(document.querySelector("select"))
   boot();
 })
+
+
 
 
