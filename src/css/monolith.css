@@ -188,10 +188,6 @@
     display: none;
 }
 
-.action-next_solutions .widget-filter.track_id { width: 75%; }
-.action-next_solutions .widget-filter.track_id .title {
-    display: none !important
-}
 
 
 /* slim header */
