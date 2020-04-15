@@ -3,8 +3,12 @@ import * as views from "../views/mentor"
 import * as discussionView from "../views/discussion"
 import { fixEditorKeystrokes } from "../fixups/bold_and_italic"
 import { MentorSolutionView } from "../views/mentor_solution"
+import { NewMessagesView } from "../views/new_messages_view"
 import { editorTips } from "../textual_analysis"
 import { BaseController } from "./base_controller"
+
+import { BUS, EventType } from "../lib/events"
+
 
 const NOT_PUBLIC_TEXT = "solution is not public"
 
@@ -25,6 +29,7 @@ const newCommentsPosted = (event? : Event | null) => {
   if (event)
     removeNotification();
 
+  BUS.fire(EventType.newComment)
   hookForms();
 }
 
@@ -42,6 +47,7 @@ export class MentorController extends BaseController {
   constructor() {
     super()
   }
+
   solution(req: ActionRequest) {
     editorTips();
     views.tweakNotificationText();
@@ -51,6 +57,9 @@ export class MentorController extends BaseController {
     // call this once to handle the comments that
     // are on the page when we first load it
     newCommentsPosted();
+
+    // alert(req.match.groups!.id);
+    new NewMessagesView({solution: req.match.groups!.id, params: this.searchParams})
 
     // document.body.addEventListener("ajax:send", (event) => {
     // document.body.addEventListener("ajax:stopped", (event) => {

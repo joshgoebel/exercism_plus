@@ -1,0 +1,23 @@
+.track-header .iterations {
+    a, div {
+        .num-comments .num {
+            font-size:12px !important;
+            padding-top: 1px !important;
+            font-weight: 500 !important;
+        }
+        &.newMessages {
+            .num-comments::after {
+                color:green !important;
+                color: #f34a56 !important;
+                text-shadow: -1px -1px 0 var(--grey-200), 1px -1px 0 var(--grey-200), -1px 1px 0 var(--grey-200), 1px 1px 0 var(--grey-200);
+            }
+            .num-comments .num {
+                color:white !important;
+                // font-size:12px !important;
+                // padding-top: 1px !important;
+                // font-weight: 500 !important;
+            }
+        }
+
+    }
+}
