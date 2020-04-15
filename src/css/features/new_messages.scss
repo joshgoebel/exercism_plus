@@ -1,0 +1,20 @@
+.track-header .iterations {
+    a, div {
+        .num-comments .num {
+            font-size:12px !important;
+            padding-top: 1px !important;
+            font-weight: 500 !important;
+        }
+        &.newMessages {
+            .num-comments::after {
+                color:green !important;
+            }
+            .num-comments .num {
+                font-size:12px !important;
+                padding-top: 1px !important;
+                font-weight: 500 !important;
+            }
+        }
+
+    }
+}
