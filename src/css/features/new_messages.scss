@@ -8,11 +8,13 @@
         &.newMessages {
             .num-comments::after {
                 color:green !important;
+                color: #f34a56 !important;
             }
             .num-comments .num {
-                font-size:12px !important;
-                padding-top: 1px !important;
-                font-weight: 500 !important;
+                color:white !important;
+                // font-size:12px !important;
+                // padding-top: 1px !important;
+                // font-weight: 500 !important;
             }
         }
 

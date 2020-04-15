@@ -7,6 +7,9 @@ import { NewMessagesView } from "../views/new_messages_view"
 import { editorTips } from "../textual_analysis"
 import { BaseController } from "./base_controller"
 
+import { BUS, EventType } from "../lib/events"
+
+
 const NOT_PUBLIC_TEXT = "solution is not public"
 
 const removeNotification = () => {
@@ -26,6 +29,7 @@ const newCommentsPosted = (event? : Event | null) => {
   if (event)
     removeNotification();
 
+  BUS.fire(EventType.newComment)
   hookForms();
 }
 
