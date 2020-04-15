@@ -4,9 +4,9 @@ import * as commonViews from "./views/common"
 import * as discussion from "./views/discussion"
 
 // controllers
-import { MentorController } from "./controllers/mentor"
+import { MentorController } from "./controllers/mentor_controller"
 import { DashboardController } from "./controllers/dashboard"
-import "./controllers/mentor"
+import "./controllers/mentor_controller"
 import "./controllers/dashboard"
 
 import "./css/features.scss"
