@@ -12,9 +12,9 @@ interface UserData {
   fullName: string
 }
 
-type UserLike = User | NoDataUser
+type AnyUser = User | NoDataUser
 
-export const whoami = () : UserLike => {
+export const whoami = () : AnyUser => {
   let person = document.querySelector(".logged-in .dropdown .person strong")
   if (!person) return new NoDataUser("Anonymous")
 
@@ -95,7 +95,7 @@ export class Users {
     return this.fromHTML(html, {userId: id})
   }
 
-  static persist(user : UserLike) {
+  static persist(user : AnyUser) {
     if (!(user instanceof User)) return;
 
     user.saveAt = new Date()
