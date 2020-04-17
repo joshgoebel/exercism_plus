@@ -7,20 +7,20 @@ export enum EventType {
 class Events {
     handlers: {[K: string]: Callback[] }
     constructor() {
-        this.handlers = {}
+      this.handlers = {}
     }
     fire(key: EventType) {
-        if (!this.handlers[key]) return;
+      if (!this.handlers[key]) return
 
-        for (let h of this.handlers[key]) {
-            h();
-        }
+      for (let h of this.handlers[key]) {
+        h()
+      }
     }
     listen(key: EventType, handler: Callback) {
-        if (!this.handlers[key]) this.handlers[key] = [];
+      if (!this.handlers[key]) this.handlers[key] = []
 
-        this.handlers[key].push(handler)
+      this.handlers[key].push(handler)
     }
 }
 
-export const BUS = new Events();
+export const BUS = new Events()

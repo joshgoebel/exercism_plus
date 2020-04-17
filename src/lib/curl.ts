@@ -18,7 +18,7 @@ export const get = async (url:string, opts = {}) => {
 
 // move to utility?
 export const trimBody = (html:string | null) => {
-  if(!html) return "";
+  if(!html) return ""
 
   let start = html.indexOf("<body")
   html = html.slice(start)

@@ -1,12 +1,12 @@
-const db = localStorage
+import { BUS, EventType } from "../lib/events";
 
-import { BUS, EventType } from "../lib/events"
+const db = localStorage;
 
 export class NewMessagesView {
     private iterations : HTMLElement[]
     private solution: string
     private iteration_id: number
-    get storageKey() {return `solutions/${this.solution}/msgs` }
+    get storageKey() { return `solutions/${this.solution}/msgs` }
     constructor({solution, params } : {solution:string, params: URLSearchParams}) {
         // for some reason they are repeated twice in the HTML???
         document.querySelector(".small-iterations-nav")?.remove()

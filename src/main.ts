@@ -15,11 +15,11 @@ import "./css/monolith.css"
 const keybindings = () => {
   // todo abstract way more later
   document.addEventListener("keyup", (event) => {
-    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    if (event.metaKey || event.ctrlKey || event.altKey) return
 
-    let element = event.target as HTMLElement;
-    if (element.tagName=="INPUT") return;
-    if (element.tagName=="TEXTAREA") return;
+    let element = event.target as HTMLElement
+    if (element.tagName=="INPUT") return
+    if (element.tagName=="TEXTAREA") return
 
     if (event.key==="n") {
       utils.redirect("/mentor/dashboard/next_solutions")
@@ -31,14 +31,14 @@ const keybindings = () => {
       document.body.classList.toggle("doublewide")
     }
     if (event.key==="/") {
-      discussion.togglePopoutEditor();
+      discussion.togglePopoutEditor()
     }
     // console.log(ev)
   })
 
 }
 
-const router = new Router();
+const router = new Router()
 let app = Router.app as any
 
 // dashboard
@@ -53,18 +53,18 @@ router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution())
 
 
 const boot = () => {
-  keybindings();
+  keybindings()
 
-  commonViews.addNewSolutionsMenuLink();
-  commonViews.addFooter();
-  commonViews.cleanupBreadcrumbs();
+  commonViews.addNewSolutionsMenuLink()
+  commonViews.addFooter()
+  commonViews.cleanupBreadcrumbs()
 
   router.go(location)
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log(document.querySelector("select"))
-  boot();
+  boot()
 })
 
 

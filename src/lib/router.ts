@@ -17,10 +17,10 @@ class Route {
     let [controllerName, action] = this.destination.split("#")
     controllerName = `${controllerName}Controller`
     this.actionName = action
-    this.newController = new Function(`return new ${controllerName}()`);
+    this.newController = new Function(`return new ${controllerName}()`)
   }
   dispatch() {
-    this.newController()[this.actionName]({match:this._lastMatch});
+    this.newController()[this.actionName]({match:this._lastMatch})
     this._lastMatch = null
   }
   // TODO: more complex matchers
@@ -63,7 +63,7 @@ export class Router {
         return `${obj.controller}#${obj.action}`
       },
       get: function(obj : RouteBuilder, prop, receiver) {
-        if (typeof prop !== "string") return;
+        if (typeof prop !== "string") return
 
         if (prop[0] === prop[0].toUpperCase()) {
           obj.controller = String(prop)

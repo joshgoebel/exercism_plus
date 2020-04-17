@@ -5,12 +5,12 @@ import * as discussionView from  "./discussion"
 export class MentorSolutionView {
   stickyLeftSide() {
     const panes = document.querySelector<HTMLElement>("#mentor-solution-page .lhs .tabs-and-panes")
-    if (!panes) return;
+    if (!panes) return
 
     const doSticky = () => {
       const windowHeight = window.innerHeight
       const height = panes.offsetHeight
-      panes.classList.toggle("stickySubmission", windowHeight > height);
+      panes.classList.toggle("stickySubmission", windowHeight > height)
       // HACK: because of bug in Exercism tabs.js implementation
       panes.className = panes.className.replace(/^(.*)\b(selected-\d)\b(.*)$/,"$1 $3 $2")
     }
@@ -22,18 +22,18 @@ export class MentorSolutionView {
 
   async render() {
 
-    this.stickyLeftSide();
-    discussionView.addPopoutToggleButton();
+    this.stickyLeftSide()
+    discussionView.addPopoutToggleButton()
 
     let profileLink = document.querySelector("#mentor-solution-page .track-header .byline a")
-    if (!profileLink) return;
+    if (!profileLink) return
 
     let userid = profileLink.innerHTML
     let user = await Users.get(userid)
-    Users.persist(user)
+    Users.persist(user!)
     // TODO: remove the ! here
     let sidebar = user!.sidebar
-    if (!sidebar) return;
+    if (!sidebar) return
 
     if (sidebar.querySelector(".badge.mentor")) {
       sidebar.querySelector(".name")!.classList.add("mentor")

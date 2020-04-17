@@ -1,22 +1,22 @@
 import { $ } from "../utils"
 
 export const cleanupBreadcrumbs = () => {
-    let breadcrumbs = document.querySelector("nav.breadcrumb")
-    if (!breadcrumbs) return;
+  let breadcrumbs = document.querySelector("nav.breadcrumb")
+  if (!breadcrumbs) return
 
-    let links = breadcrumbs.querySelectorAll("a")
-    // ugh, what's the point of a single breadcrumb that points to our current page?
-    if (links.length === 1) {
-        breadcrumbs.remove();
-    }
+  let links = breadcrumbs.querySelectorAll("a")
+  // ugh, what's the point of a single breadcrumb that points to our current page?
+  if (links.length === 1) {
+    breadcrumbs.remove()
+  }
 }
 
 export const addNewSolutionsMenuLink = () => {
-    let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
-    if (!dashboard) return;
+  let dashboard = document.querySelector('.dropdown a[href*="/mentor/dashboard"]')
+  if (!dashboard) return
 
-    dashboard.insertAdjacentElement('afterend',
-        $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"))
+  dashboard.insertAdjacentElement('afterend',
+    $("<li><a href='/mentor/dashboard/next_solutions'>Queue</a></li>"))
 }
 
 
@@ -30,9 +30,9 @@ devoted to helping improve your Exercism experience, and supported by
 `
 
 export const addFooter = () => {
-    let legal = document.querySelector<HTMLElement>("footer .legal");
-    if (!legal) return;
+  let legal = document.querySelector<HTMLElement>("footer .legal")
+  if (!legal) return
 
-    legal.insertAdjacentElement('beforebegin',$(LEGAL));
-    legal.style.marginTop="0px";
+  legal.insertAdjacentElement('beforebegin',$(LEGAL))
+  legal.style.marginTop="0px"
 }

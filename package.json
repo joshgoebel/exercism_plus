@@ -25,10 +25,16 @@
   "homepage": "https://github.com/yyyc514/exercism_plus#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
+    "@typescript-eslint/parser": "^2.28.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "rollup": "^2.3.2",
     "rollup-plugin-scss": "^2.1.0",
     "rollup-plugin-typescript2": "^0.27.0",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
-  }
+  },
+  "dependencies": {}
 }

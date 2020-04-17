@@ -21,25 +21,25 @@ const newCommentsPosted = (event? : Event | null) => {
   console.log(event)
 
   views.cleanupPostsTimestamps()
-  discussionView.useRealNames();
+  discussionView.useRealNames()
   if (utils.onMacintosh())
-    fixEditorKeystrokes();
+    fixEditorKeystrokes()
 
   // posting counts as responding to the notification
   if (event)
-    removeNotification();
+    removeNotification()
 
   BUS.fire(EventType.newComment)
-  hookForms();
+  hookForms()
 }
 
 const hookForms = () => {
   document.querySelectorAll("form").forEach((frm) => {
-    if (frm._hooked) return;
+    if (frm._hooked) return
 
-    frm.addEventListener("ajax:success",newCommentsPosted);
+    frm.addEventListener("ajax:success",newCommentsPosted)
     frm._hooked = true
-  });
+  })
 }
 
 
@@ -49,16 +49,16 @@ export class MentorController extends BaseController {
   }
 
   solution(req: ActionRequest) {
-    editorTips();
-    views.tweakNotificationText();
+    editorTips()
+    views.tweakNotificationText()
     views.renameLeaveButton()
     new MentorSolutionView().render()
 
     // call this once to handle the comments that
     // are on the page when we first load it
-    newCommentsPosted();
+    newCommentsPosted()
 
-    // alert(req.match.groups!.id);
+    // alert(req.match.groups!.id)
     new NewMessagesView({solution: req.match.groups!.id, params: this.searchParams})
 
     // document.body.addEventListener("ajax:send", (event) => {
