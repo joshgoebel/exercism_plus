@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
+    "zip": "zip -r exercism_plus.zip extension/",
     "build_extension": "./build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
