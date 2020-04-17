@@ -2,7 +2,7 @@ import { getEditor } from "./editor"
 import { $ } from "./utils"
 
 
-const TIPS = [
+const TIPS : [RegExp, string][] = [
   [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
   [/\b(never|always)\b/i, "Try not to speak in absolutes."],
   [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
@@ -20,8 +20,28 @@ const CODE_BLOCK_SNIPPET_RE = /```[\s\S]*?```/g
 const INLINE_CODE_RE = /`.*?`/g
 const QUOTED_RE = /^>.*$/m
 
+class SimpleMatcher {
+  private rule : RegExp
+  private advice : string
+  private text : string = ""
+  constructor([rule, advice] : [RegExp, string]) {
+    this.rule = rule
+    this.advice = advice
+  }
+  check(text: string) {
+    this.text = text
+  }
+  tips() {
+    if (this.rule.test(this.text)) {
+      return [ this.advice ]
+    }
+    return []
+  }
+}
+
 class ContentParser {
-  constructor(text) {
+  private text:string
+  constructor(text:string) {
     this.text = text
   }
   textualContent() {
@@ -34,13 +54,19 @@ class ContentParser {
   }
 }
 
+interface EditorElement extends HTMLTextAreaElement {
+  _tipTimer: NodeJS.Timeout | null
+}
+
 export const editorTips = () => {
-  let editor = getEditor()
+  let editor = getEditor() as EditorElement
   if (!editor) return
 
   let markdownPane = document.querySelector('.pane.markdown')
-  let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))
-  editor.closest("form").addEventListener("submit", (_event) => {
+  if (!markdownPane) return
+
+  let tips = markdownPane.insertAdjacentElement('afterbegin',$("<ul></ul>"))!
+  editor.closest("form")!.addEventListener("submit", (_event) => {
     tips.innerHTML=""
     if (editor._tipTimer) {
       clearTimeout(editor._tipTimer)
@@ -56,10 +82,12 @@ export const editorTips = () => {
       editor._tipTimer = null
       let text = new ContentParser(editor.value).textualContent()
       tips.innerHTML=""
-      for (let [matcher,suggestion] of TIPS) {
-        if (matcher.test(text)) {
+      for (let rule of TIPS) {
+        let matcher = new SimpleMatcher(rule)
+        matcher.check(text)
+        matcher.tips().forEach((suggestion) => {
           tips.appendChild($(`<li>${suggestion}</li>`))
-        }
+        })
       }
     },500)
   })

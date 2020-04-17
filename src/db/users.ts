@@ -96,7 +96,7 @@ export class Users {
   }
 
   static persist(user : AnyUser) {
-    if (!(user instanceof User)) return;
+    if (!(user instanceof User)) return
 
     user.saveAt = new Date()
     db.setItem(`users/${user.id}`,JSON.stringify(user))
