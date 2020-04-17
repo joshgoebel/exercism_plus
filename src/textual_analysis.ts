@@ -2,8 +2,9 @@ import { getEditor } from "./editor"
 import { $ } from "./utils"
 
 
-const TIPS : [RegExp, string][] = [
-  [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead."],
+const TIPS : [RegExp, string, SimpleMatchOptions?][] = [
+  [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead.",
+    {exceptions: ["ASCII","POSIX"]}],
   [/\b(never|always)\b/i, "Try not to speak in absolutes."],
   [/\b(no one|nobody)\b/i, "Try not to speak in absolutes."],
   [/\bjust\b/,"&quot;just&quot; can come across as insulting for some."],
@@ -20,22 +21,35 @@ const CODE_BLOCK_SNIPPET_RE = /```[\s\S]*?```/g
 const INLINE_CODE_RE = /`.*?`/g
 const QUOTED_RE = /^>.*$/m
 
+interface SimpleMatchOptions {
+  exceptions?: string[]
+}
+
 class SimpleMatcher {
   private rule : RegExp
   private advice : string
   private text : string = ""
-  constructor([rule, advice] : [RegExp, string]) {
-    this.rule = rule
+  private exceptions : string[]
+  constructor([rule, advice, opts] : [RegExp, string, SimpleMatchOptions?]) {
+    // turn the rule into a global so we can match multiple times
+    this.rule = new RegExp(rule.source, `${rule.flags}g`)
     this.advice = advice
+    this.exceptions = opts?.exceptions || []
   }
+
   check(text: string) {
     this.text = text
+
   }
+  exception(s: string) {
+    return this.exceptions.includes(s)
+  }
+
   tips() {
-    if (this.rule.test(this.text)) {
-      return [ this.advice ]
-    }
-    return []
+    let matches = this.text.match(this.rule) || []
+    if (matches.filter((s) => !this.exception(s)).length === 0)
+      return []
+    return [ this.advice ]
   }
 }
 
@@ -81,14 +95,17 @@ export const editorTips = () => {
     editor._tipTimer = setTimeout(() => {
       editor._tipTimer = null
       let text = new ContentParser(editor.value).textualContent()
-      tips.innerHTML=""
+      let suggestions = new Set<string>()
       for (let rule of TIPS) {
         let matcher = new SimpleMatcher(rule)
         matcher.check(text)
         matcher.tips().forEach((suggestion) => {
-          tips.appendChild($(`<li>${suggestion}</li>`))
+          suggestions.add(suggestion)
         })
       }
+      tips.innerHTML=""
+      suggestions.forEach((suggestion) =>
+        tips.appendChild($(`<li>${suggestion}</li>`)))
     },500)
   })
 }
