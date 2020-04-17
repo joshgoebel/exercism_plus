@@ -1,4 +1,5 @@
 import { $ } from "../utils"
+import { Users } from "../db/users"
 
 // export const fixDropdownFilter = () => {
 //     const filter = document.querySelector<HTMLSelectElement>("form select[name=next_track_id]")
@@ -102,10 +103,14 @@ export const cleanupSolutionList = () => {
 
   })
   document.querySelectorAll(".solution .details .iteration").forEach((el) => {
+    let badge = ""
     let handle = el.parentNode!.parentNode!.querySelector(".title .handle")!
     handle.remove()
-    let user = handle.innerHTML.replace("'s","")
-    el.innerHTML = `${el.innerHTML} <span>by</span> ${user}`
+    let userId = handle.innerHTML.replace("'s","")
+    let user = Users.findFast(userId)
+    if (user.isMentor)
+      badge = "<div class='badge'>Mentor</div>"
+    el.innerHTML = `${el.innerHTML} <span>by</span> ${userId}${badge}`
   })
 }
 

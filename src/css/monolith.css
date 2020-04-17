@@ -126,6 +126,21 @@
 #mentor-next-solutions-page .solution .extra .iteration span {
     /* color: var(--grey-500); */
 }
+
+#mentor-next-solutions-page .solution .extra .iteration .badge {
+    background: var(--grey-200);
+    color: var(--grey-800);
+
+    padding:2px 5px;
+    display: inline-block;
+    font-size: 10px;
+    margin-left:1em;
+    border-radius: 5px;
+
+    background: rgba(58,178,146,0.1);
+    border:1px solid var(--grey-300);
+}
+
 #mentor-next-solutions-page .solution .extra .iteration {
     /* display: none !important; */
     /* padding-right:0.5em; */
