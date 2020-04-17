@@ -1,6 +1,6 @@
 {
   "name": "exercism_plus",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Mentor enhancements for the great Exercism website!",
   "main": "./src/main.js",
   "types": "./src/global.d.ts",
