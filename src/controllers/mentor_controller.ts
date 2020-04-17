@@ -1,4 +1,4 @@
-import * as utils from "../utils"
+import * as utils from "../lib/utils"
 import * as views from "../views/mentor"
 import * as discussionView from "../views/discussion"
 import { fixEditorKeystrokes } from "../fixups/bold_and_italic"
@@ -70,7 +70,7 @@ export class MentorController extends BaseController {
 
   solution_not_public({match }: ActionRequest) {
     if (document.body.innerHTML.includes(NOT_PUBLIC_TEXT)) {
-      utils.redirect(`/mentor/solutions/${match.groups!.id}`)
+      this.redirect(`/mentor/solutions/${match.groups!.id}`)
     }
   }
 }

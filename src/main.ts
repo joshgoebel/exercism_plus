@@ -1,4 +1,4 @@
-import * as utils from "./utils"
+import * as utils from "./lib/utils"
 import { Router } from "./lib/router"
 import * as commonViews from "./views/common"
 import * as discussion from "./views/discussion"

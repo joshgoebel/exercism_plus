@@ -1,4 +1,4 @@
-import { $ } from "../utils"
+import { $ } from "../lib/utils"
 import { Users, whoami } from "../db/users"
 
 export const useRealNames = () => {

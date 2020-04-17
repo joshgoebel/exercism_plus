@@ -1,4 +1,4 @@
-import { $ } from "../utils"
+import { $ } from "../lib/utils"
 
 export const cleanupBreadcrumbs = () => {
   let breadcrumbs = document.querySelector("nav.breadcrumb")

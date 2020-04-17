@@ -1,4 +1,4 @@
-import { $ } from "../utils"
+import { $ } from "../lib/utils"
 import * as curl from "../lib/curl"
 
 const db = localStorage

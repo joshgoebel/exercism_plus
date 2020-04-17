@@ -1,5 +1,5 @@
 import { getEditor } from "./editor"
-import { $ } from "./utils"
+import { $ } from "./lib/utils"
 
 
 const TIPS : [RegExp, string, SimpleMatchOptions?][] = [
