@@ -9,6 +9,8 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 
 - Thoughtful UI tweaks and subtle design cleanups (less bold everywhere, a bit softer, etc.)
 - Some accessibility and contrast improvements throughout
+- Shows real names in discussions when they are available
+- <a href="#unread-message-indicators">Unread message indicators</a> - never wonder which iteration a student commented on again
 - <a href="#inline-student-profiles">Inline student profiles</a> to provide context for who you are mentoring
 - <a href="#keybindings">Keybindings</a> for common tasks
 - <a href="#textual-analysis-engine">Textual analysis engine</a> - to help prevent common mentoring anti-patterns
@@ -27,6 +29,13 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 - `w` Toggle double-wide viewing mode for discussions
 - `/` Toggle the pop-out editor for discussions
 - - Adds &#8984;B and &#8984;I keybindings for Bold and Italic to the editor on Macs
+
+### Unread Message Indicators
+
+<img src="https://raw.githubusercontent.com/yyyc514/exercism_plus/master/sample/unread_messages.png" />
+
+The first time you visit a solution the message counts will be tracked.  On
+future visits any threads that have new messages will be flagged.
 
 ### Popout Editor
 
