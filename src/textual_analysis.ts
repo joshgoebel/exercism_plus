@@ -1,6 +1,7 @@
-import { getEditor } from "./editor"
 import { $ } from "./lib/utils"
 
+export const getEditor = () =>
+  document.querySelector('textarea.md-input[name="discussion_post[content]"]')
 
 const TIPS : [RegExp, string, SimpleMatchOptions?][] = [
   [/[A-Z]{5}/, "Don't YELL at your students, try bold or italics instead.",
