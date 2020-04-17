@@ -9,6 +9,16 @@ interface UserData {
   id: string
   syncAt: Date | null
   isMentor: boolean
+  fullName: string
+}
+
+type UserLike = User | NoDataUser
+
+export const whoami = () : UserLike => {
+  let person = document.querySelector(".logged-in .dropdown .person strong")
+  if (!person) return new NoDataUser("Anonymous")
+
+  return Users.findFast(person.innerHTML)
 }
 
 class NoDataUser implements UserData {
@@ -17,11 +27,13 @@ class NoDataUser implements UserData {
   isMentor = false
   syncAt = null
   saveAt = undefined
+  fullName = ""
 
   constructor(id: string) {
     this.id = id
+    this.fullName = id
   }
-  sidebar = () => null
+  get sidebar() { return null }
 }
 
 class User implements UserData {
@@ -30,6 +42,7 @@ class User implements UserData {
   id: string
   syncAt: Date | null = null
   isMentor : boolean = false
+  fullName = ""
   constructor(data : Partial<UserData> & { id: string }) {
     // TODO: makes compiler happy, can we remove?
     this.id = data.id
@@ -42,6 +55,7 @@ class User implements UserData {
     if (!this.sidebar) return
 
     this.isMentor = this.sidebar.querySelectorAll(".badges .mentor").length > 0
+    this.fullName = this.sidebar.querySelector(".name")?.innerHTML || ""
   }
 
   get sidebar() {
@@ -81,7 +95,9 @@ export class Users {
     return this.fromHTML(html, {userId: id})
   }
 
-  static persist(user : User) {
+  static persist(user : UserLike) {
+    if (!(user instanceof User)) return;
+
     user.saveAt = new Date()
     db.setItem(`users/${user.id}`,JSON.stringify(user))
   }
@@ -89,11 +105,13 @@ export class Users {
   static fromHTML(html : string, {userId} : {userId: string}) {
     html = curl.trimBody(html)
 
-    // todo handle sidebar not found
+    let dom = $(html).parentNode
+    let sidebar = dom?.querySelector(".sidebar")
+    if (!sidebar) return new NoDataUser(userId)
 
     let user = new User({
       id: userId,
-      profileHTML: html,
+      profileHTML: `<div>${sidebar.outerHTML}</div>`,
       syncAt: new Date()
     })
 

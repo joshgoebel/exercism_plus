@@ -23,5 +23,5 @@ export const trimBody = (html:string | null) => {
   let start = html.indexOf("<body")
   html = html.slice(start)
   let end = html.indexOf("</body>")
-  return html.slice(0,end+7)
+  return html.slice(0,end+7).trim()
 }
