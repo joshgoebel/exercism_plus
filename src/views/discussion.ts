@@ -1,12 +1,16 @@
 import { $ } from "../utils"
-import { whoami } from "../db/users"
+import { Users, whoami } from "../db/users"
 
 export const useRealNames = () => {
   document.querySelectorAll(".post-body .user-handle").forEach((el) => {
     let role = el.parentNode!.querySelector(".user-role")
+
     if (el.innerHTML === whoami().id) {
       el.innerHTML = whoami().fullName
       role && role.remove()
+    } else {
+      let user = Users.findFast(el.innerHTML)
+      el.innerHTML = user.fullName
     }
     // there is only a single student it's hard to get confused about who that is
     // But don't remove the role if we're looking at someone else's review.
