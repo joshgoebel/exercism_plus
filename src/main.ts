@@ -5,9 +5,9 @@ import * as discussion from "./views/discussion"
 
 // controllers
 import { MentorController } from "./controllers/mentor_controller"
-import { DashboardController } from "./controllers/dashboard"
+import { DashboardController } from "./controllers/dashboard_controller"
 import "./controllers/mentor_controller"
-import "./controllers/dashboard"
+import "./controllers/dashboard_controller"
 
 import "./css/features.scss"
 import "./css/monolith.css"
