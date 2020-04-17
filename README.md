@@ -9,12 +9,13 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 
 - Thoughtful UI tweaks and subtle design cleanups (less bold everywhere, a bit softer, etc.)
 - Some accessibility and contrast improvements throughout
-- Shows real names in discussions when they are available
 - <a href="#unread-message-indicators">Unread message indicators</a> - never wonder which iteration a student commented on again
 - <a href="#inline-student-profiles">Inline student profiles</a> to provide context for who you are mentoring
 - <a href="#keybindings">Keybindings</a> for common tasks
 - <a href="#textual-analysis-engine">Textual analysis engine</a> - to help prevent common mentoring anti-patterns
 - <a href="#popout-editor">Pop-out editor</a> - for commenting on lengthy solutions with a lot of code
+- Shows real names in discussions when they are available
+- Fixes the broken Queue track filter to be just a regular HTML `<select>` element again
 - Add a "Queue" (New solutions) link to the site menu (my workflow is heavy on this and the Notifications view)
 
 ### Subtle usability improvements
@@ -28,7 +29,7 @@ This is mostly for mentors, you probably won't get a lot out of it as a student.
 - `;` Notifications
 - `w` Toggle double-wide viewing mode for discussions
 - `/` Toggle the pop-out editor for discussions
-- - Adds &#8984;B and &#8984;I keybindings for Bold and Italic to the editor on Macs
+- Adds &#8984;B and &#8984;I keybindings for Bold and Italic to the editor on Macs
 
 ### Unread Message Indicators
 
