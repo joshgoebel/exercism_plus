@@ -1,14 +1,7 @@
 import * as utils from "./lib/utils"
-import { Router } from "./lib/router"
 import * as commonViews from "./views/common"
 import * as discussion from "./views/discussion"
-
-// controllers
-import { MentorController } from "./controllers/mentor_controller"
-import { DashboardController } from "./controllers/dashboard_controller"
-import "./controllers/mentor_controller"
-import "./controllers/dashboard_controller"
-import "./controllers/profiles_controller"
+import { routes }  from "./config/routes"
 
 import "./css/features.scss"
 import "./css/monolith.css"
@@ -39,23 +32,6 @@ const keybindings = () => {
 
 }
 
-const router = new Router()
-let app = Router.app as any
-
-// dashboard
-router.get("/mentor/dashboard/next_solutions", app.Dashboard.next_solutions())
-router.get("/mentor/dashboard/your_solutions",app.Dashboard.your_solutions())
-router.get("/mentor/dashboard/testimonials",app.Dashboard.testimonials())
-
-// solutions
-router.get(/^\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution_not_public())
-router.get(/^\/mentor\/solutions\/(?<id>[a-z0-9]+$)/,app.Mentor.solution())
-
-// profiles
-router.get(/^\/profiles\/(?<username>[a-z0-9]+$)/, app.Profiles.show())
-
-
-
 const boot = () => {
   keybindings()
 
@@ -63,11 +39,10 @@ const boot = () => {
   commonViews.addFooter()
   commonViews.cleanupBreadcrumbs()
 
-  router.go(location)
+  routes.go(location)
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log(document.querySelector("select"))
   boot()
 })
 
