@@ -2,6 +2,7 @@ import * as utils from "./lib/utils"
 import * as commonViews from "./views/common"
 import * as discussion from "./views/discussion"
 import { routes }  from "./config/routes"
+import { settings } from "./config/settings"
 
 import "./css/features.scss"
 import "./css/monolith.css"
@@ -38,6 +39,10 @@ const boot = () => {
   commonViews.addNewSolutionsMenuLink()
   commonViews.addFooter()
   commonViews.cleanupBreadcrumbs()
+
+  if (settings.proMode) {
+    document.body.classList.add("proMode")
+  }
 
   routes.go(location)
 }
