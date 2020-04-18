@@ -1,4 +1,3 @@
-// import * as views from "../views/dashboard"
 import { BaseController } from "./base_controller"
 import { Users } from "../db/users"
 

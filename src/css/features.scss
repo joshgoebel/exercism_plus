@@ -13,6 +13,30 @@ sticky code
 }
 
 /***********
+tab new messages
+*/
+
+.header .h1-subtitle { margin-bottom:20px !important; }
+.header-tabs { padding-top:10px; }
+.header-tab {
+    position:relative;
+    overflow: visible !important;
+    .newCount {
+        position: absolute;
+        top:-10px;
+        right:-5px;
+        background:#f34a56;
+        color:white;
+        padding:0px;
+        border-radius: 20px;
+        min-width:18px;
+        font-size:10px;
+        text-align: center;
+    }
+}
+// .header-tabs a.header-tab:nth-child(2) { overflow: hidden !important; }
+
+/***********
 double wide
 */
 

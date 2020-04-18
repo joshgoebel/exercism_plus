@@ -76,12 +76,16 @@ export const renameDashboardTabs = () => {
   let mentoring = document.querySelector('.header-tab[href="/mentor/dashboard/your_solutions"]')
   if (!mentoring) return
 
-  let queue = document.querySelector('.header-tab[href="/mentor/dashboard/next_solutions"]') as HTMLElement
+  let queue = document.querySelector<HTMLElement>('.header-tab[href="/mentor/dashboard/next_solutions"]')
 
-  queue.innerHTML = queue.innerHTML.replace(/.*(\(\d+\))/,
-    "Queue $1")
-  mentoring.innerHTML = mentoring.innerHTML.replace(/.*(\(\d+\))/,
-    "Mentoring $1")
+  queue!.innerHTML = queue!.innerHTML.replace(/.*(\(\d+\))/,
+    "Queue")
+  mentoring.innerHTML = mentoring.innerHTML.replace(/.*\((\d+)\)/, (m, num) => {
+    if (Number(num)>0)
+      return `Mentoring <div class='newCount'>${num}</div>`
+    else
+      return "Mentoring"
+  })
 }
 
 export const collapseCoreExercises = () => {

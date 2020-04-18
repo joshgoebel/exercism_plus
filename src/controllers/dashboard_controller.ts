@@ -10,13 +10,12 @@ export class DashboardController {
     views.collapseCoreExercises()
     views.cleanupSolutionList()
     views.fixDropdownFilter()
-    // setTimeout(() => {views.fixDropdownFilter() }, 500)
-
   }
+
   your_solutions() {
     views.cleanupSolutionList()
   }
-  testimonials() {
 
+  testimonials() {
   }
 }
